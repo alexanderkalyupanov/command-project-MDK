@@ -1,0 +1,11 @@
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\bin\Debug\CommandProject.exe.config
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\bin\Debug\CommandProject.exe
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\bin\Debug\CommandProject.pdb
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\obj\Debug\CommandProject.csproj.AssemblyReference.cache
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\obj\Debug\CommandProject.Properties.Resources.resources
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\obj\Debug\CommandProject.csproj.GenerateResource.cache
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\obj\Debug\CommandProject.csproj.CoreCompileInputs.cache
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\obj\Debug\CommandProject.exe
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\obj\Debug\CommandProject.pdb
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\obj\Debug\CommandProject.exe.config
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\obj\Debug\CommandProject.Forms.MainMenu.MainMenu.resources
