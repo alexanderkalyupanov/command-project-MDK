@@ -22,9 +22,8 @@ namespace CommandProject
             LoginForm loginForm = new LoginForm();
             if (loginForm.ShowDialog() == DialogResult.OK)
             {
-                // После успешной авторизации запускаем главную форму
-                // TODO: Здесь будет главное меню приложения
-                Application.Run(new Form1());
+                // После успешной авторизации запускаем главное меню
+                Application.Run(new Forms.MainMenu.MainMenu());
             }
         }
     }
