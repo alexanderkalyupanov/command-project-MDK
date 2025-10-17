@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Forms",
+    "\\Managers"
   ],
-  "SelectedNode": "\\CommandProject.sln",
+  "SelectedNode": "\\UPDATE_INSTRUCTIONS.md",
   "PreviewInSolutionExplorer": false
 }
