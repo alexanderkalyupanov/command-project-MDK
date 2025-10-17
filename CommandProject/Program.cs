@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CommandProject.Forms;
 
 namespace CommandProject
 {
@@ -16,7 +17,15 @@ namespace CommandProject
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            
+            // Запуск формы входа
+            LoginForm loginForm = new LoginForm();
+            if (loginForm.ShowDialog() == DialogResult.OK)
+            {
+                // После успешной авторизации запускаем главную форму
+                // TODO: Здесь будет главное меню приложения
+                Application.Run(new Form1());
+            }
         }
     }
 }
