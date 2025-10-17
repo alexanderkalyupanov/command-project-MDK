@@ -48,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\DatabaseHelper.cs" />
+    <Compile Include="Forms\BookCardControl\BookCardControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\BookCardControl\BookCardControl.Designer.cs">
+      <DependentUpon>BookCardControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
