@@ -69,7 +69,29 @@ namespace CommandProject
                                MessageBoxButtons.OK,
                                MessageBoxIcon.Error);
             }
-        }        
+        }
+
+        private void booksBindingNavigatorSaveItem_Click(object sender, EventArgs e)
+        {
+            this.Validate();
+            this.booksBindingSource.EndEdit();
+            this.tableAdapterManager.UpdateAll(this.onlineLibraryDBDataSet);
+
+        }
+
+        private void booksBindingNavigatorSaveItem_Click_1(object sender, EventArgs e)
+        {
+            this.Validate();
+            this.booksBindingSource.EndEdit();
+            this.tableAdapterManager.UpdateAll(this.onlineLibraryDBDataSet);
+
+        }
+
+        private void AddBookForms_Load(object sender, EventArgs e)
+        {
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "onlineLibraryDBDataSet.Books". При необходимости она может быть перемещена или удалена.
+            this.booksTableAdapter.Fill(this.onlineLibraryDBDataSet.Books);
+
+        }
     }
 }
-
