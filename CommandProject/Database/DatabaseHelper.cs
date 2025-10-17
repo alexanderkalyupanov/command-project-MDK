@@ -1,7 +1,7 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -16,10 +16,38 @@ namespace CommandProject.Database
 
         public DatabaseHelper()
         {
-            // Получение строки подключения из конфигурации
-            connectionString = ConfigurationManager.ConnectionStrings["OnlineLibraryDB"]?.ConnectionString;
-            
-            if (string.IsNullOrEmpty(connectionString))
+            // Попытка получить строку подключения из конфигурации через reflection, чтобы избежать жесткой зависимости на System.Configuration сборку
+            string connFromConfig = null;
+            try
+            {
+                Type configManagerType = Type.GetType("System.Configuration.ConfigurationManager, System.Configuration");
+                if (configManagerType != null)
+                {
+                    PropertyInfo connStringsProp = configManagerType.GetProperty("ConnectionStrings", BindingFlags.Static | BindingFlags.Public);
+                    var connStrings = connStringsProp?.GetValue(null);
+                    if (connStrings != null)
+                    {
+                        // попробовать получить элемент по индексу с именем
+                        PropertyInfo itemProp = connStrings.GetType().GetProperty("Item", new[] { typeof(string) });
+                        var setting = itemProp?.GetValue(connStrings, new object[] { "OnlineLibraryDB" });
+                        if (setting != null)
+                        {
+                            PropertyInfo connProp = setting.GetType().GetProperty("ConnectionString");
+                            connFromConfig = connProp?.GetValue(setting) as string;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // игнорируем любые ошибки чтения конфигурации
+            }
+
+            if (!string.IsNullOrEmpty(connFromConfig))
+            {
+                connectionString = connFromConfig;
+            }
+            else
             {
                 // Если строка подключения не найдена, используем значение по умолчанию
                 connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\OnlineLibraryDB.mdf;Integrated Security=True";

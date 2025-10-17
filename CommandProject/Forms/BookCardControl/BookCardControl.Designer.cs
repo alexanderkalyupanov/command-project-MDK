@@ -118,7 +118,7 @@ namespace CommandProject.Forms.BookCardControlls
             {
                 this.buttonDetails.Left = System.Math.Max(8, (this.panelRight.ClientSize.Width - this.buttonDetails.Width) / 2);
                 this.labelDescription.Width = System.Math.Max(48, this.panelRight.ClientSize.Width - 16);
-            };*/
+            };
         }
 
         #endregion

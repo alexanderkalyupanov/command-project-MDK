@@ -153,7 +153,7 @@ namespace CommandProject.Forms
             this.linkRegister.Size = new System.Drawing.Size(229, 19);
             this.linkRegister.TabIndex = 8;
             this.linkRegister.TabStop = true;
-            this.linkRegister.Text = "Нет аккаунта? Зарегистрироваться";
+            this.linkRegister.Text = "Нет аккаунта? Зарегистрироваться"; 
             // 
             // LoginForm
             // 
