@@ -302,14 +302,11 @@
             this.Controls.Add(this.panelTop);
             this.Controls.Add(this.panel2);
             this.Name = "AddBookForms";
-            this.Text = "AddBookForms";
-            this.Load += new System.EventHandler(this.AddBookForms_Load);
+            this.Text = "AddBookForms";            
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panelTop.ResumeLayout(false);
-            this.panelTop.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
-            this.ResumeLayout(false);
+            this.panelTop.PerformLayout();            
 
         }
 
@@ -337,4 +334,5 @@
         private System.Windows.Forms.ComboBox CBGenres;
         private System.Windows.Forms.Button button1;
     }
+
 }
