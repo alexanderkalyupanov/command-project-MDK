@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,6 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\DatabaseHelper.cs" />
+    <Compile Include="Forms\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,10 +66,22 @@
     <Compile Include="Forms\MainMenu\MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Managers\SessionManager.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\ValidationHelper.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainMenu\MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RegisterForm.resx">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -71,8 +91,13 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Database\CreateDatabase.sql" />
+    <None Include="Database\InsertTestData.sql" />
+    <None Include="Database\StoredProcedures.sql" />
+    <None Include="SETUP_GUIDE.md" />
+    <None Include="START_HERE.md" />
+    <None Include="TEAM_API_GUIDE.md" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
