@@ -113,6 +113,17 @@ namespace CommandProject.Forms.BookCardControlls
 
         private void ButtonDetails_Click(object sender, EventArgs e)
         {
+            // Show placeholder message for 'Подробнее' button on the card
+            try
+            {
+                MessageBox.Show("Данная функциональность будет реализована в следующих версиях приложения.", "Подробнее", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch
+            {
+                // ignore any UI errors
+            }
+
+            // Raise event for external handlers if any
             DetailsClicked?.Invoke(this, this.BookId);
         }
     }
