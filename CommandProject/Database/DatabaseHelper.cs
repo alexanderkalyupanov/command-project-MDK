@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using CommandProject; // for ClassConnectDB
 
 namespace CommandProject.Database
 {
@@ -244,6 +245,52 @@ namespace CommandProject.Database
             catch (Exception ex)
             {
                 throw new Exception($"Ошибка получения списка пользователей: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Получение списка книг из базы данных.
+        /// Возвращает DataTable с колонками: ID, Title, Description, CoverPath, Author, Rating
+        /// Использует ClassConnectDB.GetOpenConnection чтобы подключиться к серверу, избегая попыток автоподключения файла .mdf.
+        /// </summary>
+        public DataTable GetAllBooks()
+        {
+            try
+            {
+                // Use the application's central connection helper to avoid AttachDbFilename conflicts
+                using (SqlConnection connection = ClassConnectDB.GetOpenConnection())
+                {
+                    string sql = @"
+SELECT b.BookID AS ID,
+       b.Title,
+       b.Description,
+       b.CoverImagePath AS CoverPath,
+       -- Список авторов через подзапрос (имена через запятую)
+       STUFF((
+           SELECT ', ' + a.FirstName + ' ' + a.LastName
+           FROM BookAuthors ba
+           JOIN Authors a ON ba.AuthorID = a.AuthorID
+           WHERE ba.BookID = b.BookID
+           FOR XML PATH('')
+       ), 1, 2, '') AS Author,
+       b.Rating
+FROM Books b
+ORDER BY b.Title;";
+
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                        {
+                            DataTable dataTable = new DataTable();
+                            adapter.Fill(dataTable);
+                            return dataTable;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ошибка получения списка книг: {ex.Message}");
             }
         }
 

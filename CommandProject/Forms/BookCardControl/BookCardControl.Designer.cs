@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace CommandProject.Forms.BookCardControlls
 {
@@ -107,8 +109,8 @@ namespace CommandProject.Forms.BookCardControlls
             this.buttonDetails.FlatStyle = FlatStyle.Flat;
             this.buttonDetails.FlatAppearance.BorderSize = 0;
             this.buttonDetails.Size = new System.Drawing.Size(160, 40);
-            /*this.buttonDetails.Location = new System.Drawing.Point((this.panelRight.Width - this.buttonDetails.Width) 
-                / 2, this.panelRight.Height - this.buttonDetails.Height - 8);*/
+            // Initial location: centered horizontally and placed near the bottom of panelRight
+            this.buttonDetails.Location = new System.Drawing.Point(System.Math.Max(8, (this.panelRight.Width - this.buttonDetails.Width) / 2), System.Math.Max(8, this.panelRight.Height - this.buttonDetails.Height - 8));
             this.buttonDetails.Anchor = AnchorStyles.Bottom;
             this.buttonDetails.Click += new System.EventHandler(this.ButtonDetails_Click);
             this.panelRight.Controls.Add(this.buttonDetails);
@@ -117,6 +119,7 @@ namespace CommandProject.Forms.BookCardControlls
             this.panelRight.Resize += (s, e) =>
             {
                 this.buttonDetails.Left = System.Math.Max(8, (this.panelRight.ClientSize.Width - this.buttonDetails.Width) / 2);
+                this.buttonDetails.Top = System.Math.Max(8, this.panelRight.ClientSize.Height - this.buttonDetails.Height - 8);
                 this.labelDescription.Width = System.Math.Max(48, this.panelRight.ClientSize.Width - 16);
             };
         }
