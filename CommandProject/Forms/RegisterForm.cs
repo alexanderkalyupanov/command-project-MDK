@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using CommandProject.Database;
 using CommandProject.Utils;
+using CommandProject; // for ClassConnectDB
 
 namespace CommandProject.Forms
 {
@@ -29,7 +30,19 @@ namespace CommandProject.Forms
         public RegisterForm()
         {
             InitializeComponent();
-            dbHelper = new DatabaseHelper();
+            try
+            {
+                // prefer the application's central connection helper to get correct connection string
+                using (var conn = ClassConnectDB.GetOpenConnection())
+                {
+                    dbHelper = new DatabaseHelper(conn.ConnectionString);
+                }
+            }
+            catch
+            {
+                // fallback to default DatabaseHelper behavior
+                dbHelper = new DatabaseHelper();
+            }
         }
 
         private void InitializeComponent()
@@ -187,6 +200,7 @@ namespace CommandProject.Forms
             this.btnRegister.TabIndex = 12;
             this.btnRegister.Text = "Зарегистрироваться";
             this.btnRegister.UseVisualStyleBackColor = false;
+            this.btnRegister.Click += new System.EventHandler(this.BtnRegister_Click);
             // 
             // linkLogin
             // 
@@ -201,6 +215,7 @@ namespace CommandProject.Forms
             this.linkLogin.TabIndex = 13;
             this.linkLogin.TabStop = true;
             this.linkLogin.Text = "Уже есть аккаунт? Войти";
+            this.linkLogin.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLogin_LinkClicked);
             // 
             // RegisterForm
             // 

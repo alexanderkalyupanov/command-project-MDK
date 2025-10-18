@@ -19,15 +19,15 @@ namespace CommandProject
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Запуск формы входа
-            /*LoginForm loginForm = new LoginForm();
+            LoginForm loginForm = new LoginForm();
             if(loginForm.ShowDialog() == DialogResult.OK)
             {
                 // После успешной авторизации запускаем главное меню
                 Application.Run(new Forms.MainMenu.MainMenu());
-            }*/
+            }
 
             // Запуск главного меню сразу при старте приложения
-            Application.Run(new Forms.MainMenu.MainMenu());
+            //Application.Run(new Forms.MainMenu.MainMenu());
         }
     }
 }

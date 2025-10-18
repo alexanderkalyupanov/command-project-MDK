@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using CommandProject.Database;
 using CommandProject.Managers;
+using CommandProject; // for ClassConnectDB
 
 namespace CommandProject.Forms
 {
@@ -24,7 +25,15 @@ namespace CommandProject.Forms
         public LoginForm()
         {
             InitializeComponent();
-            dbHelper = new DatabaseHelper();
+            try
+            {
+                // use configured connection string directly to avoid auto-attach fallback
+                dbHelper = new DatabaseHelper(ClassConnectDB.GetConnectionString());
+            }
+            catch
+            {
+                dbHelper = new DatabaseHelper();
+            }
             
             // Обработчик Enter для входа
             txtPassword.KeyPress += TxtPassword_KeyPress;
@@ -140,6 +149,7 @@ namespace CommandProject.Forms
             this.btnLogin.TabIndex = 7;
             this.btnLogin.Text = "Войти";
             this.btnLogin.UseVisualStyleBackColor = false;
+            this.btnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
             // linkRegister
             // 
@@ -154,6 +164,7 @@ namespace CommandProject.Forms
             this.linkRegister.TabIndex = 8;
             this.linkRegister.TabStop = true;
             this.linkRegister.Text = "Нет аккаунта? Зарегистрироваться"; 
+            this.linkRegister.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkRegister_LinkClicked);
             // 
             // LoginForm
             // 

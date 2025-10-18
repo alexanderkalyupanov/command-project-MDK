@@ -50,6 +50,21 @@ namespace CommandProject.Database
             }
             else
             {
+                // Try to obtain central configured connection string from ClassConnectDB (preferred)
+                try
+                {
+                    var cs = ClassConnectDB.GetConnectionString();
+                    if (!string.IsNullOrEmpty(cs))
+                    {
+                        connectionString = cs;
+                        return;
+                    }
+                }
+                catch
+                {
+                    // ignore
+                }
+
                 // Если строка подключения не найдена, используем значение по умолчанию
                 connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\OnlineLibraryDB.mdf;Integrated Security=True";
             }
