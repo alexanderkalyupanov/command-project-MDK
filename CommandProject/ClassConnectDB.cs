@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CommandProject
 {
     class ClassConnectDB
     {
-        private const string ConnectionString = "Server=HaverlandSuslovPC\\MSSQLSERVER02;Database=OnlineLibraryDB;Integrated Security=True;";
+        // Жёстко заданная строка подключения для указанного сервера и базы данных
+        private static readonly string ConnectionString =
+            "Server=DESKTOP-JUDO2JQ\\MSSQLSERVERDEZGA;Database=OnlineLibraryDB;Integrated Security=True;TrustServerCertificate=True;";
 
         public static SqlConnection GetOpenConnection()
         {
