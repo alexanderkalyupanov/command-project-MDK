@@ -225,10 +225,9 @@ namespace CommandProject.Database
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                // Use central connection helper to avoid AttachDbFilename issues
+                using (SqlConnection connection = ClassConnectDB.GetOpenConnection())
                 {
-                    connection.Open();
-
                     using (SqlCommand command = new SqlCommand("sp_GetAllUsers", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
@@ -273,6 +272,15 @@ SELECT b.BookID AS ID,
            WHERE ba.BookID = b.BookID
            FOR XML PATH('')
        ), 1, 2, '') AS Author,
+       -- Список жанров через подзапрос
+       STUFF((
+           SELECT ', ' + g.GenreName
+           FROM BookGenres bg
+           JOIN Genres g ON bg.GenreID = g.GenreID
+           WHERE bg.BookID = b.BookID
+           FOR XML PATH('')
+       ), 1, 2, '') AS Genres,
+       b.PublishedYear AS PublishedYear,
        b.Rating
 FROM Books b
 ORDER BY b.Title;";
@@ -291,6 +299,127 @@ ORDER BY b.Title;";
             catch (Exception ex)
             {
                 throw new Exception($"Ошибка получения списка книг: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Возвращает список авторов (AuthorID, Name)
+        /// </summary>
+        public DataTable GetAuthors()
+        {
+            try
+            {
+                using (SqlConnection connection = ClassConnectDB.GetOpenConnection())
+                {
+                    string sql = "SELECT AuthorID, FirstName + ' ' + LastName AS Name FROM Authors ORDER BY LastName, FirstName";
+                    using (var cmd = new SqlCommand(sql, connection))
+                    using (var adapter = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
+                        return dt;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ошибка получения списка авторов: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Возвращает список жанров (GenreID, GenreName)
+        /// </summary>
+        public DataTable GetGenres()
+        {
+            try
+            {
+                using (SqlConnection connection = ClassConnectDB.GetOpenConnection())
+                {
+                    string sql = "SELECT GenreID, GenreName FROM Genres ORDER BY GenreName";
+                    using (var cmd = new SqlCommand(sql, connection))
+                    using (var adapter = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
+                        return dt;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ошибка получения списка жанров: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Возвращает список книг по фильтру. Все параметры опциональны.
+        /// </summary>
+        public DataTable GetBooksByFilter(int? authorId, int? genreId, decimal? minRating, decimal? maxRating)
+        {
+            try
+            {
+                using (SqlConnection connection = ClassConnectDB.GetOpenConnection())
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append(@"SELECT b.BookID AS ID,
+       b.Title,
+       b.Description,
+       b.CoverImagePath AS CoverPath,
+       STUFF((
+           SELECT ', ' + a.FirstName + ' ' + a.LastName
+           FROM BookAuthors ba
+           JOIN Authors a ON ba.AuthorID = a.AuthorID
+           WHERE ba.BookID = b.BookID
+           FOR XML PATH('')
+       ), 1, 2, '') AS Author,
+       STUFF((
+           SELECT ', ' + g.GenreName
+           FROM BookGenres bg
+           JOIN Genres g ON bg.GenreID = g.GenreID
+           WHERE bg.BookID = b.BookID
+           FOR XML PATH('')
+       ), 1, 2, '') AS Genres,
+       b.PublishedYear AS PublishedYear,
+       b.Rating
+FROM Books b
+");
+                    sb.Append("WHERE 1=1\n");
+
+                    if (authorId.HasValue)
+                        sb.Append("AND EXISTS (SELECT 1 FROM BookAuthors ba WHERE ba.BookID = b.BookID AND ba.AuthorID = @AuthorID)\n");
+                    if (genreId.HasValue)
+                        sb.Append("AND EXISTS (SELECT 1 FROM BookGenres bg WHERE bg.BookID = b.BookID AND bg.GenreID = @GenreID)\n");
+                    if (minRating.HasValue)
+                        sb.Append("AND b.Rating >= @MinRating\n");
+                    if (maxRating.HasValue)
+                        sb.Append("AND b.Rating <= @MaxRating\n");
+
+                    sb.Append("ORDER BY b.Title;");
+
+                    using (var cmd = new SqlCommand(sb.ToString(), connection))
+                    {
+                        if (authorId.HasValue)
+                            cmd.Parameters.AddWithValue("@AuthorID", authorId.Value);
+                        if (genreId.HasValue)
+                            cmd.Parameters.AddWithValue("@GenreID", genreId.Value);
+                        if (minRating.HasValue)
+                            cmd.Parameters.AddWithValue("@MinRating", minRating.Value);
+                        if (maxRating.HasValue)
+                            cmd.Parameters.AddWithValue("@MaxRating", maxRating.Value);
+
+                        using (var adapter = new SqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            adapter.Fill(dt);
+                            return dt;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ошибка получения списка книг по фильтру: {ex.Message}");
             }
         }
 
@@ -462,6 +591,94 @@ ORDER BY b.Title;";
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Возвращает список жанров, в которых есть книги выбранного автора (GenreID, GenreName)
+        /// </summary>
+        public DataTable GetGenresByAuthor(int authorId)
+        {
+            try
+            {
+                using (SqlConnection connection = ClassConnectDB.GetOpenConnection())
+                {
+                    string sql = @"SELECT DISTINCT g.GenreID, g.GenreName
+FROM Genres g
+JOIN BookGenres bg ON g.GenreID = bg.GenreID
+JOIN BookAuthors ba ON bg.BookID = ba.BookID
+WHERE ba.AuthorID = @AuthorID
+ORDER BY g.GenreName";
+                    using (var cmd = new SqlCommand(sql, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@AuthorID", authorId);
+                        using (var adapter = new SqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            adapter.Fill(dt);
+                            return dt;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ошибка получения жанров для автора: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Возвращает список авторов, которые писали в выбранном жанре (AuthorID, Name)
+        /// </summary>
+        public DataTable GetAuthorsByGenre(int genreId)
+        {
+            try
+            {
+                using (SqlConnection connection = ClassConnectDB.GetOpenConnection())
+                {
+                    // Include LastName and FirstName in select because DISTINCT + ORDER BY by those columns requires them to be in the select list
+                    string sql = @"SELECT DISTINCT a.AuthorID,
+       a.FirstName + ' ' + a.LastName AS Name,
+       a.LastName,
+       a.FirstName
+FROM Authors a
+JOIN BookAuthors ba ON a.AuthorID = ba.AuthorID
+JOIN BookGenres bg ON ba.BookID = bg.BookID
+WHERE bg.GenreID = @GenreID
+ORDER BY a.LastName, a.FirstName";
+                    using (var cmd = new SqlCommand(sql, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@GenreID", genreId);
+                        using (var adapter = new SqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            adapter.Fill(dt);
+                            return dt;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ошибка получения авторов для жанра: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Алиасы для совместимости: возвращает список авторов (AuthorID, Name)
+        /// Для фильтров могут вызываться GetAllAuthors() — сделать совместимый метод.
+        /// </summary>
+        public DataTable GetAllAuthors()
+        {
+            // reuse existing implementation
+            return GetAuthors();
+        }
+
+        /// <summary>
+        /// Алиас для получения всех жанров (GenreID, GenreName)
+        /// </summary>
+        public DataTable GetAllGenres()
+        {
+            return GetGenres();
         }
     }
 }

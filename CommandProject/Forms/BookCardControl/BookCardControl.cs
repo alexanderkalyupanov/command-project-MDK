@@ -25,17 +25,21 @@ namespace CommandProject.Forms.BookCardControlls
             linkLabelAuthor.Text = string.Empty;
             labelRating.Text = "0.0/5.0";
             labelDescription.Text = string.Empty;
+            labelGenres.Text = "Жанры: ---";
+            labelYear.Text = "Год: ---";
             SetCoverPlaceholder();
         }
 
-        // Simple model-less setter: pass values directly
-        public void SetData(int bookId, string title, string authors, decimal? rating, string shortDescription, Image coverImage = null)
+        // Simple model-less setter: pass values directly (new overload with genres and year)
+        public void SetData(int bookId, string title, string authors, decimal? rating, string shortDescription, string genres, int? year, Image coverImage = null)
         {
             this.BookId = bookId;
             this.labelTitle.Text = title ?? string.Empty;
             this.linkLabelAuthor.Text = authors ?? string.Empty;
             this.labelDescription.Text = shortDescription ?? string.Empty;
             this.labelRating.Text = rating.HasValue ? $"{rating.Value:0.0}/5.0" : "0.0/5.0";
+            this.labelGenres.Text = string.IsNullOrWhiteSpace(genres) ? "Жанры: ---" : $"Жанры: {genres}";
+            this.labelYear.Text = year.HasValue ? $"Год: {year.Value}" : "Год: ---";
 
             if(coverImage != null)
                 SetCoverImage(coverImage);
@@ -46,16 +50,19 @@ namespace CommandProject.Forms.BookCardControlls
         // Alternative setter taking a cover image path (absolute or relative to app base)
         public void SetData(int bookId, string title, string authors, decimal? rating, string shortDescription, string coverImagePath)
         {
-            this.BookId = bookId;
-            this.labelTitle.Text = title ?? string.Empty;
-            this.linkLabelAuthor.Text = authors ?? string.Empty;
-            this.labelDescription.Text = shortDescription ?? string.Empty;
-            this.labelRating.Text = rating.HasValue ? $"{rating.Value:0.0}/5.0" : "0.0/5.0";
+            // keep backward compatibility: call newer overload without genres and year
+            SetData(bookId, title, authors, rating, shortDescription, null, null, null);
 
             if(!string.IsNullOrWhiteSpace(coverImagePath))
                 SetCoverImageFromPath(coverImagePath);
             else
                 SetCoverPlaceholder();
+        }
+
+        // Existing old overload without cover path - update to call new overload
+        public void SetData(int bookId, string title, string authors, decimal? rating, string shortDescription, Image coverImage = null)
+        {
+            SetData(bookId, title, authors, rating, shortDescription, null, null, coverImage);
         }
 
         public void SetCoverImage(Image image)

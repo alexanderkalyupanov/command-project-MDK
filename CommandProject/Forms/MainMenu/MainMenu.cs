@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Linq;
 using CommandProject.Forms.BookCardControlls;
 using CommandProject.Database;
+using CommandProject.Forms;
 
 namespace CommandProject.Forms.MainMenu
 {
@@ -89,6 +90,12 @@ namespace CommandProject.Forms.MainMenu
                     string description = row.Table.Columns.Contains("Description") && row["Description"] != DBNull.Value ? row["Description"].ToString() : string.Empty;
                     string coverPath = row.Table.Columns.Contains("CoverPath") && row["CoverPath"] != DBNull.Value ? row["CoverPath"].ToString() : string.Empty;
                     string author = row.Table.Columns.Contains("Author") && row["Author"] != DBNull.Value ? row["Author"].ToString() : string.Empty;
+                    string genres = row.Table.Columns.Contains("Genres") && row["Genres"] != DBNull.Value ? row["Genres"].ToString() : string.Empty;
+                    int? publishedYear = null;
+                    if (row.Table.Columns.Contains("PublishedYear") && row["PublishedYear"] != DBNull.Value)
+                    {
+                        if (int.TryParse(row["PublishedYear"].ToString(), out int y)) publishedYear = y;
+                    }
                     decimal? rating = null;
                     if (row.Table.Columns.Contains("Rating") && row["Rating"] != DBNull.Value)
                     {
@@ -96,10 +103,10 @@ namespace CommandProject.Forms.MainMenu
                     }
 
                     var card = new BookCardControl();
+                    // Use new overload that accepts genres and year; then set cover from path if available
+                    card.SetData(id, title, author, rating, description, genres, publishedYear);
                     if (!string.IsNullOrWhiteSpace(coverPath))
-                        card.SetData(id, title, author, rating, description, coverPath);
-                    else
-                        card.SetData(id, title, author, rating, description);
+                        card.SetCoverImageFromPath(coverPath);
 
                     // store metadata for later search
                     card.Tag = new BookMeta { Id = id, Title = title ?? string.Empty, Author = author ?? string.Empty, Description = description ?? string.Empty };
@@ -207,6 +214,8 @@ namespace CommandProject.Forms.MainMenu
             int bestDistance = int.MaxValue;
             int currentScroll = flowLayoutPanelBooks.VerticalScroll.Value;
 
+            int matchCount = 0;
+
             foreach (BookCardControl c in flowLayoutPanelBooks.Controls.OfType<BookCardControl>())
             {
                 var meta = c.Tag as BookMeta;
@@ -222,6 +231,7 @@ namespace CommandProject.Forms.MainMenu
 
                 if (match)
                 {
+                    matchCount++;
                     // distance from current scroll position
                     int distance = Math.Abs(c.Top - currentScroll);
                     if (distance < bestDistance)
@@ -230,6 +240,12 @@ namespace CommandProject.Forms.MainMenu
                         nearest = c;
                     }
                 }
+            }
+
+            if (matchCount == 0)
+            {
+                MessageBox.Show($"По запросу '{query}' книг не найдено.", "Результаты поиска", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
 
             if (nearest != null)
@@ -392,7 +408,60 @@ namespace CommandProject.Forms.MainMenu
         }
         private void buttonFilters_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Данная функциональность будет реализована в следующих версиях.", "Фильтры");
+            try
+            {
+                using (var filter = new FilterForm())
+                {
+                    var res = filter.ShowDialog(this);
+                    if (res == DialogResult.OK && filter.Tag is DataTable dt)
+                    {
+                        // populate from filtered data
+                        PopulateCardsFromDataTable(dt);
+                    }
+                    // if Cancelled or closed via X, do nothing
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при открытии фильтров: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void PopulateCardsFromDataTable(DataTable dt)
+        {
+            flowLayoutPanelBooks.Controls.Clear();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                int id = row.Table.Columns.Contains("ID") && row["ID"] != DBNull.Value ? Convert.ToInt32(row["ID"]) : 0;
+                string title = row.Table.Columns.Contains("Title") && row["Title"] != DBNull.Value ? row["Title"].ToString() : string.Empty;
+                string description = row.Table.Columns.Contains("Description") && row["Description"] != DBNull.Value ? row["Description"].ToString() : string.Empty;
+                string coverPath = row.Table.Columns.Contains("CoverPath") && row["CoverPath"] != DBNull.Value ? row["CoverPath"].ToString() : string.Empty;
+                string author = row.Table.Columns.Contains("Author") && row["Author"] != DBNull.Value ? row["Author"].ToString() : string.Empty;
+                string genres = row.Table.Columns.Contains("Genres") && row["Genres"] != DBNull.Value ? row["Genres"].ToString() : string.Empty;
+                int? publishedYear = null;
+                if (row.Table.Columns.Contains("PublishedYear") && row["PublishedYear"] != DBNull.Value)
+                {
+                    if (int.TryParse(row["PublishedYear"].ToString(), out int y)) publishedYear = y;
+                }
+                decimal? rating = null;
+                if (row.Table.Columns.Contains("Rating") && row["Rating"] != DBNull.Value)
+                {
+                    try { rating = Convert.ToDecimal(row["Rating"]); } catch { rating = null; }
+                }
+
+                var card = new BookCardControl();
+                card.SetData(id, title, author, rating, description, genres, publishedYear);
+                if (!string.IsNullOrWhiteSpace(coverPath))
+                    card.SetCoverImageFromPath(coverPath);
+
+                card.Tag = new BookMeta { Id = id, Title = title ?? string.Empty, Author = author ?? string.Empty, Description = description ?? string.Empty };
+                card.DetailsClicked += Card_DetailsClicked;
+                card.Margin = new Padding(8);
+                flowLayoutPanelBooks.Controls.Add(card);
+            }
+
+            CenterFlowContents();
         }
     }
 }
