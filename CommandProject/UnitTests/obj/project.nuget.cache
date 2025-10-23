@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "4QTJfUvDgzM=",
+  "success": true,
+  "projectFilePath": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\UnitTests\\UnitTests.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\kbabl\\.nuget\\packages\\microsoft.codecoverage\\16.11.0\\microsoft.codecoverage.16.11.0.nupkg.sha512",
+    "C:\\Users\\kbabl\\.nuget\\packages\\microsoft.net.test.sdk\\16.11.0\\microsoft.net.test.sdk.16.11.0.nupkg.sha512",
+    "C:\\Users\\kbabl\\.nuget\\packages\\mstest.testadapter\\2.2.10\\mstest.testadapter.2.2.10.nupkg.sha512",
+    "C:\\Users\\kbabl\\.nuget\\packages\\mstest.testframework\\2.2.10\\mstest.testframework.2.2.10.nupkg.sha512"
+  ],
+  "logs": []
+}

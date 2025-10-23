@@ -1,0 +1,91 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\UnitTests\\UnitTests.csproj": {}
+  },
+  "projects": {
+    "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\CommandProject.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\CommandProject.csproj",
+        "projectName": "CommandProject",
+        "projectPath": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\CommandProject.csproj",
+        "UsingMicrosoftNETSdk": false,
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
+    "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\UnitTests\\UnitTests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\UnitTests\\UnitTests.csproj",
+        "projectName": "UnitTests",
+        "projectPath": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\UnitTests\\UnitTests.csproj",
+        "packagesPath": "C:\\Users\\kbabl\\.nuget\\packages\\",
+        "outputPath": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\UnitTests\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\kbabl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net48"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net48": {
+            "targetAlias": "net48",
+            "projectReferences": {
+              "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\CommandProject.csproj": {
+                "projectPath": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\CommandProject.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net48": {
+          "targetAlias": "net48",
+          "dependencies": {
+            "MSTest.TestAdapter": {
+              "target": "Package",
+              "version": "[2.2.10, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[2.2.10, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.11.0, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

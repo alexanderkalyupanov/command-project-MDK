@@ -1,0 +1,6 @@
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\UnitTests\obj\Debug\net48\UnitTests.csproj.AssemblyReference.cache
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\UnitTests\obj\Debug\net48\UnitTests.GeneratedMSBuildEditorConfig.editorconfig
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\UnitTests\obj\Debug\net48\UnitTests.AssemblyInfoInputs.cache
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\UnitTests\obj\Debug\net48\UnitTests.AssemblyInfo.cs
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\UnitTests\obj\Debug\net48\UnitTests.csproj.CoreCompileInputs.cache
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\CommandProject\UnitTests\obj\Debug\net48\UnitTests.sourcelink.json
