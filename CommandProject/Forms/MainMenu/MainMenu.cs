@@ -9,7 +9,7 @@ using System.Globalization;
 using System.Linq;
 using CommandProject.Forms.BookCardControlls;
 using CommandProject.Database;
-using CommandProject.Forms;
+using CommandProject.Managers;
 
 namespace CommandProject.Forms.MainMenu
 {
@@ -24,14 +24,22 @@ namespace CommandProject.Forms.MainMenu
             public string Description { get; set; }
         }
 
+        // currently selected card (single selection)
+        private BookCardControl selectedCard;
+
         public MainMenu()
         {
             InitializeComponent();
+
+            // allow form to receive key events before focused control
+            this.KeyPreview = true;
+            this.KeyDown += MainMenu_KeyDown;
 
             // Apply rounded corners to search panel and buttons after initialization
             // Use Resize events to handle designer/layout changes
             this.searchPanel.Resize += (s, e) => RoundControl(this.searchPanel, 24);
             this.buttonSearch.Resize += (s, e) => RoundControl(this.buttonSearch, 16);
+            if (this.buttonAddBook != null) this.buttonAddBook.Resize += (s, e) => RoundControl(this.buttonAddBook, 20);
             this.buttonFilters.Resize += (s, e) => RoundControl(this.buttonFilters, 20);
             this.buttonProfile.Resize += (s, e) => RoundControl(this.buttonProfile, 20);
             this.buttonSettings.Resize += (s, e) => RoundControl(this.buttonSettings, 16);
@@ -39,12 +47,14 @@ namespace CommandProject.Forms.MainMenu
             // Ensure initial rounding
             RoundControl(this.searchPanel, 24);
             RoundControl(this.buttonSearch, 16);
+            if (this.buttonAddBook != null) RoundControl(this.buttonAddBook, 20);
             RoundControl(this.buttonFilters, 20);
             RoundControl(this.buttonProfile, 20);
             RoundControl(this.buttonSettings, 16);
 
             // Optional: make buttons flat and visually consistent
             ConfigureButtonStyle(this.buttonSearch);
+            if (this.buttonAddBook != null) ConfigureButtonStyle(this.buttonAddBook);
             ConfigureButtonStyle(this.buttonFilters);
             ConfigureButtonStyle(this.buttonProfile);
             ConfigureButtonStyle(this.buttonSettings);
@@ -64,8 +74,77 @@ namespace CommandProject.Forms.MainMenu
             this.textBoxSearch.KeyDown += textBoxSearch_KeyDown;
             this.buttonSearch.Click += buttonSearch_Click;
 
+            // show add-book button only for admins
+            if (this.buttonAddBook != null)
+            {
+                this.buttonAddBook.Visible = SessionManager.IsAdmin;
+                this.buttonAddBook.Click += buttonAddBook_Click;
+            }
+
+            // update visibility when user logs in/out
+            SessionManager.OnUserLoggedIn += (s, e) => UpdateAdminControls();
+            SessionManager.OnUserLoggedOut += (s, e) => UpdateAdminControls();
+
             // Load book cards when form finishes loading layout
             this.Load += MainMenu_Load;
+        }
+
+        private void MainMenu_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Delete selected book on Del if admin
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (selectedCard == null)
+                    return;
+
+                if (!SessionManager.IsAdmin)
+                {
+                    MessageBox.Show("Удалять книги может только администратор.", "Доступ запрещён", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // reuse existing deletion logic
+                Card_DeleteRequested(selectedCard, selectedCard.BookId);
+                e.Handled = true;
+            }
+        }
+
+        private void UpdateAdminControls()
+        {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new Action(UpdateAdminControls));
+                return;
+            }
+
+            if (this.buttonAddBook != null)
+                this.buttonAddBook.Visible = SessionManager.IsAdmin;
+
+            // when admin state changes, update context menus on cards (if any)
+            foreach (var c in flowLayoutPanelBooks.Controls.OfType<BookCardControl>())
+            {
+                // BookCardControl checks SessionManager when showing context menu, no action needed here
+            }
+        }
+
+        private void buttonAddBook_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var add = new AddBookForms())
+                {
+                    var res = add.ShowDialog(this);
+                    if (res == DialogResult.OK)
+                    {
+                        // refresh book list after adding
+                        LoadAllBookCards();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при открытии формы добавления книги: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
@@ -77,6 +156,7 @@ namespace CommandProject.Forms.MainMenu
         private void LoadAllBookCards()
         {
             flowLayoutPanelBooks.Controls.Clear();
+            selectedCard = null;
 
             try
             {
@@ -111,7 +191,11 @@ namespace CommandProject.Forms.MainMenu
                     // store metadata for later search
                     card.Tag = new BookMeta { Id = id, Title = title ?? string.Empty, Author = author ?? string.Empty, Description = description ?? string.Empty };
 
+                    // wire events
                     card.DetailsClicked += Card_DetailsClicked;
+                    card.DeleteRequested += Card_DeleteRequested;
+                    AttachSelectionHandlers(card);
+
                     card.Margin = new Padding(8);
                     flowLayoutPanelBooks.Controls.Add(card);
                 }
@@ -125,10 +209,115 @@ namespace CommandProject.Forms.MainMenu
             }
         }
 
+        private void AttachSelectionHandlers(BookCardControl card)
+        {
+            if (card == null) return;
+
+            // select on click for card and all child controls so clicks anywhere select
+            void selectAction(object s, MouseEventArgs e)
+            {
+                SelectCard(card);
+            }
+
+            card.MouseClick += (s, e) => { if (e.Button == MouseButtons.Left) SelectCard(card); };
+
+            // Attach to immediate children and grandchildren to handle clicks anywhere inside the control
+            foreach (Control c in card.Controls)
+            {
+                c.MouseClick += (s, e) => { if (e.Button == MouseButtons.Left) SelectCard(card); };
+                foreach (Control inner in c.Controls)
+                {
+                    inner.MouseClick += (s, e) => { if (e.Button == MouseButtons.Left) SelectCard(card); };
+                }
+            }
+        }
+
+        private void SelectCard(BookCardControl card)
+        {
+            if (card == null) return;
+
+            // clear previous selection visual
+            if (selectedCard != null && !selectedCard.IsDisposed)
+            {
+                selectedCard.BackColor = Color.White;
+            }
+
+            selectedCard = card;
+
+            // highlight selected
+            selectedCard.BackColor = Color.FromArgb(220, 240, 255);
+
+            // scroll into view
+            try { flowLayoutPanelBooks.ScrollControlIntoView(selectedCard); } catch { }
+        }
+
+        private void Card_DeleteRequested(object sender, int bookId)
+        {
+            // Only admins allowed
+            if (!SessionManager.IsAdmin)
+            {
+                MessageBox.Show("Удалять книги может только администратор.", "Доступ запрещён", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var cardControl = sender as BookCardControl;
+            var confirm = MessageBox.Show("Вы действительно хотите удалить книгу из каталога?", "Подтвердите удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (confirm != DialogResult.Yes) return;
+
+            try
+            {
+                var db = new DatabaseHelper();
+                bool ok = db.DeleteBook(bookId);
+                if (ok)
+                {
+                    // remove control from UI
+                    if (cardControl != null && flowLayoutPanelBooks.Controls.Contains(cardControl))
+                    {
+                        flowLayoutPanelBooks.Controls.Remove(cardControl);
+                        cardControl.Dispose();
+                    }
+                    else
+                    {
+                        var c = flowLayoutPanelBooks.Controls.OfType<BookCardControl>().FirstOrDefault(x => x.BookId == bookId);
+                        if (c != null)
+                        {
+                            flowLayoutPanelBooks.Controls.Remove(c);
+                            c.Dispose();
+                        }
+                    }
+
+                    // clear selection if it was the removed one
+                    if (selectedCard != null && selectedCard.BookId == bookId)
+                        selectedCard = null;
+
+                    MessageBox.Show("Книга успешно удалена.", "Удалено", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CenterFlowContents();
+                }
+                else
+                {
+                    MessageBox.Show("Книга не найдена или не удалена.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при удалении книги: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void Card_DetailsClicked(object sender, int bookId)
         {
-            // Handle details click — for now show message. Replace with opening book reader form if needed.
-            MessageBox.Show($"Открыть карточку книги ID={bookId}", "Детали книги", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Open BookReaderForm for the selected book
+            try
+            {
+                using (var reader = new CommandProject.BookReaderForm(bookId))
+                {
+                    reader.ShowDialog(this);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Не удалось открыть просмотр книги: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void ConfigureButtonStyle(Button btn)
