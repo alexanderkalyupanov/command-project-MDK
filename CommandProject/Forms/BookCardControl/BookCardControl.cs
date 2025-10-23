@@ -11,11 +11,67 @@ namespace CommandProject.Forms.BookCardControlls
 
         // Raised when Details button is clicked. Argument = BookId (or 0 if not set).
         public event EventHandler<int> DetailsClicked;
+        // Raised when delete is requested from this card
+        public event EventHandler<int> DeleteRequested;
+
+        private ContextMenuStrip cardContextMenu;
 
         public BookCardControl()
         {
             InitializeComponent();
             ResetToDefaults();
+            InitializeContextMenu();
+            // enable key preview via parent form; we will not set KeyPreview here
+        }
+
+        private void InitializeContextMenu()
+        {
+            cardContextMenu = new ContextMenuStrip();
+            var miDetails = new ToolStripMenuItem("Подробнее");
+            miDetails.Click += (s, e) => {
+                ButtonDetails_Click(this, EventArgs.Empty);
+            };
+            var miDelete = new ToolStripMenuItem("Удалить");
+            miDelete.Name = "miDelete";
+            miDelete.Click += (s, e) => {
+                DeleteRequested?.Invoke(this, this.BookId);
+            };
+            cardContextMenu.Items.Add(miDetails);
+            cardContextMenu.Items.Add(miDelete);
+
+            // Show context menu on right click
+            this.MouseUp += (s, e) => {
+                if (e.Button == MouseButtons.Right)
+                {
+                    // enable/disable delete item based on session (main menu will set visibility too)
+                    var deleteItem = cardContextMenu.Items[1] as ToolStripMenuItem;
+                    try
+                    {
+                        deleteItem.Enabled = CommandProject.Managers.SessionManager.IsAdmin;
+                    }
+                    catch { deleteItem.Enabled = false; }
+
+                    cardContextMenu.Show(this, e.Location);
+                }
+            };
+
+            // also show when right-click on inner controls
+            foreach (Control c in this.Controls)
+            {
+                c.MouseUp += (s, e) => {
+                    if (e.Button == MouseButtons.Right)
+                    {
+                        var deleteItem = cardContextMenu.Items[1] as ToolStripMenuItem;
+                        try
+                        {
+                            deleteItem.Enabled = CommandProject.Managers.SessionManager.IsAdmin;
+                        }
+                        catch { deleteItem.Enabled = false; }
+
+                        cardContextMenu.Show((Control)s, e.Location);
+                    }
+                };
+            }
         }
 
         private void ResetToDefaults()
@@ -120,15 +176,6 @@ namespace CommandProject.Forms.BookCardControlls
 
         private void ButtonDetails_Click(object sender, EventArgs e)
         {
-            // Show placeholder message for 'Подробнее' button on the card
-            try
-            {
-                MessageBox.Show("Данная функциональность будет реализована в следующих версиях приложения.", "Подробнее", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch
-            {
-                // ignore any UI errors
-            }
 
             // Raise event for external handlers if any
             DetailsClicked?.Invoke(this, this.BookId);

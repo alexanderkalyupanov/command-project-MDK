@@ -15,6 +15,7 @@
         private System.Windows.Forms.Label labelLogo;
         private System.Windows.Forms.PictureBox pictureBoxLogo;
         private System.Windows.Forms.PictureBox pictureBoxSettingsIcon;
+        private System.Windows.Forms.Button buttonAddBook;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelBooks;
 
         protected override void Dispose(bool disposing)
@@ -29,6 +30,7 @@
             this.panelTop = new System.Windows.Forms.Panel();
             this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
             this.labelLogo = new System.Windows.Forms.Label();
+            this.buttonAddBook = new System.Windows.Forms.Button();
             this.searchPanel = new System.Windows.Forms.Panel();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.buttonSearch = new System.Windows.Forms.Button();
@@ -51,6 +53,7 @@
             this.panelTop.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panelTop.Controls.Add(this.pictureBoxLogo);
             this.panelTop.Controls.Add(this.labelLogo);
+            this.panelTop.Controls.Add(this.buttonAddBook);
             this.panelTop.Controls.Add(this.searchPanel);
             this.panelTop.Controls.Add(this.buttonFilters);
             this.panelTop.Controls.Add(this.buttonProfile);
@@ -66,7 +69,6 @@
             // pictureBoxLogo
             // 
             this.pictureBoxLogo.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBoxLogo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.pictureBoxLogo.Location = new System.Drawing.Point(9, 20);
             this.pictureBoxLogo.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBoxLogo.Name = "pictureBoxLogo";
@@ -87,16 +89,33 @@
             this.labelLogo.TabIndex = 1;
             this.labelLogo.Text = "Книгоfeel";
             // 
+            // buttonAddBook
+            // 
+            this.buttonAddBook.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
+            this.buttonAddBook.FlatAppearance.BorderSize = 0;
+            this.buttonAddBook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAddBook.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.buttonAddBook.ForeColor = System.Drawing.Color.White;
+            this.buttonAddBook.Location = new System.Drawing.Point(207, 27);
+            this.buttonAddBook.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonAddBook.Name = "buttonAddBook";
+            this.buttonAddBook.Padding = new System.Windows.Forms.Padding(9, 0, 0, 0);
+            this.buttonAddBook.Size = new System.Drawing.Size(99, 36);
+            this.buttonAddBook.TabIndex = 2;
+            this.buttonAddBook.Text = "+Книга";
+            this.buttonAddBook.UseVisualStyleBackColor = false;
+            this.buttonAddBook.Click += new System.EventHandler(this.buttonAddBook_Click);
+            // 
             // searchPanel
             // 
             this.searchPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
             this.searchPanel.Controls.Add(this.textBoxSearch);
             this.searchPanel.Controls.Add(this.buttonSearch);
-            this.searchPanel.Location = new System.Drawing.Point(300, 26);
+            this.searchPanel.Location = new System.Drawing.Point(327, 26);
             this.searchPanel.Margin = new System.Windows.Forms.Padding(2);
             this.searchPanel.Name = "searchPanel";
             this.searchPanel.Padding = new System.Windows.Forms.Padding(10);
-            this.searchPanel.Size = new System.Drawing.Size(760, 38);
+            this.searchPanel.Size = new System.Drawing.Size(733, 38);
             this.searchPanel.TabIndex = 2;
             // 
             // textBoxSearch
@@ -106,7 +125,7 @@
             this.textBoxSearch.Location = new System.Drawing.Point(14, 9);
             this.textBoxSearch.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxSearch.Name = "textBoxSearch";
-            this.textBoxSearch.Size = new System.Drawing.Size(620, 20);
+            this.textBoxSearch.Size = new System.Drawing.Size(593, 20);
             this.textBoxSearch.TabIndex = 0;
             this.textBoxSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSearch_KeyDown);
             // 
@@ -118,7 +137,7 @@
             this.buttonSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.buttonSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.buttonSearch.Location = new System.Drawing.Point(648, 6);
+            this.buttonSearch.Location = new System.Drawing.Point(621, 6);
             this.buttonSearch.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSearch.Name = "buttonSearch";
             this.buttonSearch.Size = new System.Drawing.Size(96, 26);
@@ -165,7 +184,6 @@
             // pictureBoxSettingsIcon
             // 
             this.pictureBoxSettingsIcon.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBoxSettingsIcon.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.pictureBoxSettingsIcon.Location = new System.Drawing.Point(1402, 12);
             this.pictureBoxSettingsIcon.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBoxSettingsIcon.Name = "pictureBoxSettingsIcon";
@@ -173,14 +191,13 @@
             this.pictureBoxSettingsIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxSettingsIcon.TabIndex = 6;
             this.pictureBoxSettingsIcon.TabStop = false;
-            this.pictureBoxSettingsIcon.Click += new System.EventHandler(this.buttonSettings_Click);
             // 
             // buttonSettings
             // 
             this.buttonSettings.BackColor = System.Drawing.Color.Transparent;
             this.buttonSettings.FlatAppearance.BorderSize = 0;
             this.buttonSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSettings.Location = new System.Drawing.Point(1542, 27);
+            this.buttonSettings.Location = new System.Drawing.Point(1458, 27);
             this.buttonSettings.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSettings.Name = "buttonSettings";
             this.buttonSettings.Size = new System.Drawing.Size(44, 36);
@@ -193,46 +210,42 @@
             this.panelSeparator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(102)))), ((int)(((byte)(0)))));
             this.panelSeparator.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSeparator.Location = new System.Drawing.Point(0, 90);
-            this.panelSeparator.Margin = new System.Windows.Forms.Padding(2);
             this.panelSeparator.Name = "panelSeparator";
-            this.panelSeparator.Size = new System.Drawing.Size(1470, 8);
-            this.panelSeparator.TabIndex = 1;
+            this.panelSeparator.Size = new System.Drawing.Size(1470, 6);
+            this.panelSeparator.TabIndex = 3;
             // 
             // panelContent
             // 
             this.panelContent.BackColor = System.Drawing.Color.White;
             this.panelContent.Controls.Add(this.flowLayoutPanelBooks);
             this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContent.Location = new System.Drawing.Point(0, 98);
-            this.panelContent.Margin = new System.Windows.Forms.Padding(2);
+            this.panelContent.Location = new System.Drawing.Point(0, 96);
             this.panelContent.Name = "panelContent";
-            this.panelContent.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.panelContent.Size = new System.Drawing.Size(1470, 592);
-            this.panelContent.TabIndex = 0;
+            this.panelContent.Padding = new System.Windows.Forms.Padding(20);
+            this.panelContent.Size = new System.Drawing.Size(1470, 654);
+            this.panelContent.TabIndex = 4;
             // 
             // flowLayoutPanelBooks
             // 
             this.flowLayoutPanelBooks.AutoScroll = true;
-            this.flowLayoutPanelBooks.BackColor = System.Drawing.Color.White;
+            this.flowLayoutPanelBooks.BackColor = System.Drawing.Color.Transparent;
             this.flowLayoutPanelBooks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanelBooks.Location = new System.Drawing.Point(6, 5);
-            this.flowLayoutPanelBooks.Margin = new System.Windows.Forms.Padding(2);
+            this.flowLayoutPanelBooks.Location = new System.Drawing.Point(20, 20);
             this.flowLayoutPanelBooks.Name = "flowLayoutPanelBooks";
-            this.flowLayoutPanelBooks.Size = new System.Drawing.Size(1458, 582);
+            this.flowLayoutPanelBooks.Padding = new System.Windows.Forms.Padding(10);
+            this.flowLayoutPanelBooks.Size = new System.Drawing.Size(1430, 614);
             this.flowLayoutPanelBooks.TabIndex = 0;
             // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(131)))), ((int)(((byte)(58)))), ((int)(((byte)(180)))));
-            this.ClientSize = new System.Drawing.Size(1470, 690);
+            this.ClientSize = new System.Drawing.Size(1470, 750);
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panelSeparator);
             this.Controls.Add(this.panelTop);
-            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainMenu";
-            this.Text = "Книгоfeel";
+            this.Text = "MainMenu";
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();

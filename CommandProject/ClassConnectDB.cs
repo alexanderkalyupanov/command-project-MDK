@@ -30,5 +30,11 @@ namespace CommandProject
                 connection.Close();
             }
         }
+
+        // Возвращает заданную строку подключения, чтобы вызывающие стороны могли создавать помощники без открытия соединения
+        public static string GetConnectionString()
+        {
+            return ConnectionString;
+        }
     }
 }
