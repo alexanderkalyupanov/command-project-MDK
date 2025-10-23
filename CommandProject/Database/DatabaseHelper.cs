@@ -695,6 +695,82 @@ ORDER BY a.LastName, a.FirstName";
         {
             return GetGenres();
         }
+
+        /// <summary>
+        /// Удаление книги по ID
+        /// </summary>
+        public bool DeleteBook(int bookId)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (var cmd = new SqlCommand("DELETE FROM Books WHERE BookID = @BookID", connection))
+                    {
+                        cmd.Parameters.AddWithValue("@BookID", bookId);
+                        int rows = cmd.ExecuteNonQuery();
+                        return rows > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ошибка удаления книги: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Возвращает данные книги по ее идентификатору.
+        /// Возвращает DataTable с одной строкой (если найдена) или пустую таблицу.
+        /// </summary>
+        public DataTable GetBookById(int bookId)
+        {
+            try
+            {
+                using (SqlConnection connection = ClassConnectDB.GetOpenConnection())
+                {
+                    string sql = @"
+SELECT b.BookID AS ID,
+       b.Title,
+       b.Description,
+       b.CoverImagePath AS CoverPath,
+       STUFF((
+           SELECT ', ' + a.FirstName + ' ' + a.LastName
+           FROM BookAuthors ba
+           JOIN Authors a ON ba.AuthorID = a.AuthorID
+           WHERE ba.BookID = b.BookID
+           FOR XML PATH('')
+       ), 1, 2, '') AS Author,
+       STUFF((
+           SELECT ', ' + g.GenreName
+           FROM BookGenres bg
+           JOIN Genres g ON bg.GenreID = g.GenreID
+           WHERE bg.BookID = b.BookID
+           FOR XML PATH('')
+       ), 1, 2, '') AS Genres,
+       b.PublishedYear AS PublishedYear,
+       b.Rating
+FROM Books b
+WHERE b.BookID = @BookID;";
+
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@BookID", bookId);
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                        {
+                            DataTable dataTable = new DataTable();
+                            adapter.Fill(dataTable);
+                            return dataTable;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ошибка получения книги: {ex.Message}");
+            }
+        }
     }
 }
 
