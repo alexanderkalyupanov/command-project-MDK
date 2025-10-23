@@ -244,5 +244,8 @@
     <Content Include="Resources\Icons\app_logo.png" />
     <Content Include="Resources\Icons\icon_settins.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CommandProject\UnitTests\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,7 +7,7 @@ namespace CommandProject
     {
         // Жёстко заданная строка подключения для указанного сервера и базы данных
         private static readonly string ConnectionString =
-            "Server=DESKTOP-JUDO2JQ\MSSQLSERVERDEZGA;Database=OnlineLibraryDB;Integrated Security=True;TrustServerCertificate=True;";
+            "Server=DESKTOP-JUDO2JQ\\MSSQLSERVERDEZGA;Database=OnlineLibraryDB;Integrated Security=True;TrustServerCertificate=True;";
 
         public static SqlConnection GetOpenConnection()
         {

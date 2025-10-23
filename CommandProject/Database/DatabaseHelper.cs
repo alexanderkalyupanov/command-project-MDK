@@ -66,7 +66,7 @@ namespace CommandProject.Database
                 }
 
                 // Если строка подключения не найдена, используем значение по умолчанию
-                connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\OnlineLibraryDB.mdf;Integrated Security=True";
+                connectionString = @"Data Source=DESKTOP-JUDO2JQ\MSSQLSERVERDEZGA;AttachDbFilename=|DataDirectory|\OnlineLibraryDB.mdf;Integrated Security=True";
             }
         }
 
