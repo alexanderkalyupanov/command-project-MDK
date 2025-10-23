@@ -1,0 +1,6 @@
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\TestProject\obj\Debug\net8.0\TestProject.csproj.AssemblyReference.cache
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\TestProject\obj\Debug\net8.0\TestProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\TestProject\obj\Debug\net8.0\TestProject.AssemblyInfoInputs.cache
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\TestProject\obj\Debug\net8.0\TestProject.AssemblyInfo.cs
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\TestProject\obj\Debug\net8.0\TestProject.csproj.CoreCompileInputs.cache
+C:\_UsingFiles\_Job\_GitHubProject\K-SyndicateGame\command-project-MDK\TestProject\obj\Debug\net8.0\TestProject.sourcelink.json
