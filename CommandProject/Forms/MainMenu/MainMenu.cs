@@ -306,17 +306,36 @@ namespace CommandProject.Forms.MainMenu
 
         private void Card_DetailsClicked(object sender, int bookId)
         {
-            // Open BookReaderForm for the selected book
+            // Open BookReaderForm for the selected book with proper user role
             try
             {
-                using (var reader = new CommandProject.BookReaderForm(bookId))
-                {
-                    reader.ShowDialog(this);
-                }
+                // Get current user role from SessionManager
+                string userRole = GetCurrentUserRole();
+
+                // Use the static method that automatically chooses the right mode
+                CommandProject.BookReaderForm.ShowBookForm(bookId, userRole, this);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Не удалось открыть просмотр книги: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private string GetCurrentUserRole()
+        {
+            // Get user role from SessionManager
+            // Assuming SessionManager has a property for user role
+            if (SessionManager.IsAdmin)
+            {
+                return "Admin";
+            }
+            else if (SessionManager.IsLoggedIn)
+            {
+                return "User";
+            }
+            else
+            {
+                return "Guest"; // or "User" if you want to treat guests as regular users
             }
         }
 
