@@ -498,17 +498,12 @@ namespace BookReader
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
-
-        private void BookReader_FormClosing(object sender, FormClosingEventArgs e)
+        // Добавьте этот метод для загрузки книги по пути
+        public void LoadBookFromPath(string filePath)
         {
-            // Очистка ресурсов
-            bookPages?.Clear();
+            LoadBook(filePath);
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            // Заглушка для pictureBox - можно использовать для логотипа
-        }
     }
 
     public class BookInfo

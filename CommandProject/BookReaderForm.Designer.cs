@@ -44,6 +44,7 @@
             this.buttonFilters = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonRead = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.panelTop.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -51,7 +52,7 @@
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(102)))), ((int)(((byte)(0)))));
             this.panel1.Location = new System.Drawing.Point(2, 95);
@@ -76,6 +77,7 @@
             this.button1.TabIndex = 18;
             this.button1.Text = "Отменить";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label7
             // 
@@ -114,6 +116,7 @@
             // pictureBoxLogo
             // 
             this.pictureBoxLogo.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBoxLogo.Image = global::CommandProject.Properties.Resources.app_logo;
             this.pictureBoxLogo.Location = new System.Drawing.Point(9, 20);
             this.pictureBoxLogo.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBoxLogo.Name = "pictureBoxLogo";
@@ -149,15 +152,18 @@
             // 
             // buttonSettings
             // 
+            this.buttonSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSettings.BackColor = System.Drawing.Color.Transparent;
             this.buttonSettings.FlatAppearance.BorderSize = 0;
-            this.buttonSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSettings.Location = new System.Drawing.Point(1542, 27);
+            this.buttonSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;            
+            this.buttonSettings.Location = new System.Drawing.Point(890, 20);
             this.buttonSettings.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSettings.Name = "buttonSettings";
             this.buttonSettings.Size = new System.Drawing.Size(44, 36);
             this.buttonSettings.TabIndex = 7;
+            this.buttonSettings.Text = "⚙";
             this.buttonSettings.UseVisualStyleBackColor = false;
+            this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
             // 
             // label2
             // 
@@ -177,9 +183,12 @@
             // 
             // RTBDescription
             // 
+            this.RTBDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.RTBDescription.Location = new System.Drawing.Point(0, 135);
             this.RTBDescription.Name = "RTBDescription";
-            this.RTBDescription.Size = new System.Drawing.Size(792, 165);
+            this.RTBDescription.Size = new System.Drawing.Size(946, 165);
             this.RTBDescription.TabIndex = 4;
             this.RTBDescription.Text = "";
             // 
@@ -213,9 +222,10 @@
             // 
             // panel2
             // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.buttonRead);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.label7);
             this.panel2.Controls.Add(this.CBGenres);
@@ -226,10 +236,27 @@
             this.panel2.Controls.Add(this.TBTitle);
             this.panel2.Controls.Add(this.RTBDescription);
             this.panel2.Controls.Add(this.buttonFilters);
-            this.panel2.Location = new System.Drawing.Point(-1, 111);
+            this.panel2.Location = new System.Drawing.Point(0, 111);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(946, 382);
             this.panel2.TabIndex = 5;
+            // 
+            // buttonRead
+            // 
+            this.buttonRead.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
+            this.buttonRead.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.buttonRead.FlatAppearance.BorderSize = 0;
+            this.buttonRead.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonRead.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.buttonRead.ForeColor = System.Drawing.Color.White;
+            this.buttonRead.Location = new System.Drawing.Point(0, 310);
+            this.buttonRead.Name = "buttonRead";
+            this.buttonRead.Size = new System.Drawing.Size(946, 72);
+            this.buttonRead.TabIndex = 19;
+            this.buttonRead.Text = "Начать читать";
+            this.buttonRead.UseVisualStyleBackColor = false;
+            this.buttonRead.Visible = false;
+            this.buttonRead.Click += new System.EventHandler(this.buttonRead_Click);
             // 
             // BookReaderForm
             // 
@@ -240,14 +267,15 @@
             this.Controls.Add(this.panelTop);
             this.Controls.Add(this.panel2);
             this.Name = "BookReaderForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BookReaderForm";
+            this.Load += new System.EventHandler(this.BookReaderForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
-
         }
 
         #endregion
@@ -268,5 +296,6 @@
         private System.Windows.Forms.Button buttonFilters;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button buttonRead;
     }
 }
