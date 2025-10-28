@@ -13,7 +13,7 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if(disposing && (components != null))
             {
                 components.Dispose();
             }
@@ -45,6 +45,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.buttonRead = new System.Windows.Forms.Button();
+            this.buttonManageFile = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             this.panelTop.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -140,6 +141,7 @@
             // panelTop
             // 
             this.panelTop.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panelTop.Controls.Add(this.buttonManageFile);
             this.panelTop.Controls.Add(this.pictureBoxLogo);
             this.panelTop.Controls.Add(this.labelLogo);
             this.panelTop.Controls.Add(this.buttonSettings);
@@ -155,7 +157,7 @@
             this.buttonSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSettings.BackColor = System.Drawing.Color.Transparent;
             this.buttonSettings.FlatAppearance.BorderSize = 0;
-            this.buttonSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;            
+            this.buttonSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSettings.Location = new System.Drawing.Point(890, 20);
             this.buttonSettings.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSettings.Name = "buttonSettings";
@@ -249,7 +251,7 @@
             this.buttonRead.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonRead.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.buttonRead.ForeColor = System.Drawing.Color.White;
-            this.buttonRead.Location = new System.Drawing.Point(0, 310);
+            this.buttonRead.Location = new System.Drawing.Point(0, 238);
             this.buttonRead.Name = "buttonRead";
             this.buttonRead.Size = new System.Drawing.Size(946, 72);
             this.buttonRead.TabIndex = 19;
@@ -257,6 +259,22 @@
             this.buttonRead.UseVisualStyleBackColor = false;
             this.buttonRead.Visible = false;
             this.buttonRead.Click += new System.EventHandler(this.buttonRead_Click);
+            // 
+            // buttonManageFile
+            // 
+            this.buttonManageFile.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.buttonManageFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
+            this.buttonManageFile.FlatAppearance.BorderSize = 0;
+            this.buttonManageFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonManageFile.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.buttonManageFile.ForeColor = System.Drawing.Color.White;
+            this.buttonManageFile.Location = new System.Drawing.Point(725, 48);
+            this.buttonManageFile.Name = "buttonManageFile";
+            this.buttonManageFile.Size = new System.Drawing.Size(209, 28);
+            this.buttonManageFile.TabIndex = 20;
+            this.buttonManageFile.Text = "Локальный поиск книг";
+            this.buttonManageFile.UseVisualStyleBackColor = false;
+            this.buttonManageFile.Click += new System.EventHandler(this.buttonManageFile_Click);
             // 
             // BookReaderForm
             // 
@@ -276,6 +294,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         #endregion
@@ -297,5 +316,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button buttonRead;
+        private System.Windows.Forms.Button buttonManageFile;
     }
 }

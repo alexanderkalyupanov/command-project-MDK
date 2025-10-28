@@ -61,6 +61,16 @@ namespace CommandProject.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Agata_Kristi_10_Negrityat {
+            get {
+                object obj = ResourceManager.GetObject("Agata_Kristi_10_Negrityat", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap app_logo {

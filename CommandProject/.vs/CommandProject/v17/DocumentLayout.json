@@ -3,6 +3,38 @@
   "WorkspaceRootPath": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|c:\\_usingfiles\\_job\\_githubproject\\k-syndicategame\\command-project-mdk\\commandproject\\readerbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:readerbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|c:\\_usingfiles\\_job\\_githubproject\\k-syndicategame\\command-project-mdk\\commandproject\\readerbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:readerbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\bookreaderform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:bookreaderform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|c:\\_usingfiles\\_job\\_githubproject\\k-syndicategame\\command-project-mdk\\commandproject\\database\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:database\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|c:\\_usingfiles\\_job\\_githubproject\\k-syndicategame\\command-project-mdk\\commandproject\\bookreaderform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:bookreaderform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|c:\\_usingfiles\\_job\\_githubproject\\k-syndicategame\\command-project-mdk\\commandproject\\bookreaderform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:bookreaderform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|c:\\_usingfiles\\_job\\_githubproject\\k-syndicategame\\command-project-mdk\\commandproject\\classconnectdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:classconnectdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|c:\\_usingfiles\\_job\\_githubproject\\k-syndicategame\\command-project-mdk\\commandproject\\readerbook.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:readerbook.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|c:\\_usingfiles\\_job\\_githubproject\\k-syndicategame\\command-project-mdk\\commandproject\\properties\\resources.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
       "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:properties\\resources.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
     },
@@ -11,129 +43,16 @@
       "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:forms\\bookcardcontrol\\bookcardcontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|c:\\_usingfiles\\_job\\_githubproject\\k-syndicategame\\command-project-mdk\\commandproject\\properties\\resources1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:properties\\resources1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\properties\\resources.resx||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:properties\\resources.resx||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\forms\\mainmenu\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:forms\\mainmenu\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|c:\\_usingfiles\\_job\\_githubproject\\k-syndicategame\\command-project-mdk\\commandproject\\forms\\bookcardcontrol\\bookcardcontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:forms\\bookcardcontrol\\bookcardcontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\forms\\bookcardcontrol\\bookcardcontrol.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:forms\\bookcardcontrol\\bookcardcontrol.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\forms\\bookcardcontrol\\bookcardcontrol.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:forms\\bookcardcontrol\\bookcardcontrol.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\forms\\mainmenu\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:forms\\mainmenu\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:Form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\forms\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:forms\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|CommandProject||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\resources\\books\\covers\\451.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:resources\\books\\covers\\451.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\resources\\books\\covers\\1984.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:resources\\books\\covers\\1984.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\readerbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:readerbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\readerbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:readerbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\database\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:database\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\bookreaderform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:bookreaderform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\classconnectdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:classconnectdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\bookreaderwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:bookreaderwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\addbookforms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:addbookforms.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Managers\\SessionManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:Managers\\SessionManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\LoginForm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:Forms\\LoginForm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:BookReader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\readerbook.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:readerbook.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReader.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:BookReader.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\bookreaderform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:bookreaderform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Utils\\ValidationHelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:Utils\\ValidationHelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\alexa\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\command-project-MDK\\CommandProject\\UPDATE_INSTRUCTIONS.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\alexa\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\command-project-MDK\\CommandProject\\START_HERE.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\TEAM_API_GUIDE.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TEAM_API_GUIDE.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Models\\User.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:Models\\User.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\properties\\resources.resx||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{7F82E93D-D39A-46E1-96DE-BBCCB8DEDC29}|CommandProject.csproj|solutionrelative:properties\\resources.resx||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -142,8 +61,8 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 186,
-          "SelectedChildIndex": 3,
+          "DockedWidth": 211,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -159,19 +78,147 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Resources.resx",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Properties\\Resources.resx",
-              "RelativeDocumentMoniker": "Properties\\Resources.resx",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Properties\\Resources.resx",
-              "RelativeToolTip": "Properties\\Resources.resx",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2025-10-28T19:48:49.815Z",
+              "DocumentIndex": 3,
+              "Title": "DatabaseHelper.cs",
+              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Database\\DatabaseHelper.cs",
+              "RelativeDocumentMoniker": "Database\\DatabaseHelper.cs",
+              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Database\\DatabaseHelper.cs",
+              "RelativeToolTip": "Database\\DatabaseHelper.cs",
+              "ViewState": "AgIAAL8CAAAAAAAAAAAwwNcCAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T20:56:06.516Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
+              "Title": "BookReaderForm.cs [Design]",
+              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReaderForm.cs",
+              "RelativeDocumentMoniker": "BookReaderForm.cs",
+              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReaderForm.cs [Design]",
+              "RelativeToolTip": "BookReaderForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T20:26:33.673Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BookReaderForm.cs",
+              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReaderForm.cs",
+              "RelativeDocumentMoniker": "BookReaderForm.cs",
+              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReaderForm.cs",
+              "RelativeToolTip": "BookReaderForm.cs",
+              "ViewState": "AgIAAPAAAAAAAAAAAAAAAGIBAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T17:13:07.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ReaderBook.cs [Design]",
+              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\ReaderBook.cs",
+              "RelativeDocumentMoniker": "ReaderBook.cs",
+              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\ReaderBook.cs [Design]",
+              "RelativeToolTip": "ReaderBook.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T20:34:23.821Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ReaderBook.cs",
+              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\ReaderBook.cs",
+              "RelativeDocumentMoniker": "ReaderBook.cs",
+              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\ReaderBook.cs",
+              "RelativeToolTip": "ReaderBook.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAQwBkAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T20:29:52.613Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "BookReaderForm.Designer.cs",
+              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReaderForm.Designer.cs",
+              "RelativeDocumentMoniker": "BookReaderForm.Designer.cs",
+              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReaderForm.Designer.cs",
+              "RelativeToolTip": "BookReaderForm.Designer.cs",
+              "ViewState": "AgIAABYBAAAAAAAAAAAwwEABAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T20:54:32.149Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ClassConnectDB.cs",
+              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\ClassConnectDB.cs",
+              "RelativeDocumentMoniker": "ClassConnectDB.cs",
+              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\ClassConnectDB.cs",
+              "RelativeToolTip": "ClassConnectDB.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T20:41:35.473Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ReaderBook.Designer.cs",
+              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\ReaderBook.Designer.cs",
+              "RelativeDocumentMoniker": "ReaderBook.Designer.cs",
+              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\ReaderBook.Designer.cs",
+              "RelativeToolTip": "ReaderBook.Designer.cs",
+              "ViewState": "AgIAAOEAAAAAAAAAAAAgwAcBAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T20:34:30.579Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "BookCardControl.cs",
+              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\BookCardControl\\BookCardControl.cs",
+              "RelativeDocumentMoniker": "Forms\\BookCardControl\\BookCardControl.cs",
+              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\BookCardControl\\BookCardControl.cs",
+              "RelativeToolTip": "Forms\\BookCardControl\\BookCardControl.cs",
+              "ViewState": "AgIAAAoBAAAAAAAAAADwvysBAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T17:48:26.8Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "BookCardControl.Designer.cs",
+              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\BookCardControl\\BookCardControl.Designer.cs",
+              "RelativeDocumentMoniker": "Forms\\BookCardControl\\BookCardControl.Designer.cs",
+              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\BookCardControl\\BookCardControl.Designer.cs",
+              "RelativeToolTip": "Forms\\BookCardControl\\BookCardControl.Designer.cs",
+              "ViewState": "AgIAAKQAAAAAAAAAAAAAAKQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T19:37:03.502Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "BookCardControl.cs [Design]",
+              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\BookCardControl\\BookCardControl.cs",
+              "RelativeDocumentMoniker": "Forms\\BookCardControl\\BookCardControl.cs",
+              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\BookCardControl\\BookCardControl.cs [Design]",
+              "RelativeToolTip": "Forms\\BookCardControl\\BookCardControl.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T20:16:47.906Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "Resources.resx",
               "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Properties\\Resources.resx",
               "RelativeDocumentMoniker": "Properties\\Resources.resx",
@@ -183,34 +230,21 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "BookCardControl.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\BookCardControl\\BookCardControl.cs",
-              "RelativeDocumentMoniker": "Forms\\BookCardControl\\BookCardControl.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\BookCardControl\\BookCardControl.cs",
-              "RelativeToolTip": "Forms\\BookCardControl\\BookCardControl.cs",
-              "ViewState": "AgIAAAwBAAAAAAAAAAAjwB0BAAA6AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T17:48:26.8Z",
+              "DocumentIndex": 8,
+              "Title": "Resources.resx",
+              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Properties\\Resources.resx",
+              "RelativeDocumentMoniker": "Properties\\Resources.resx",
+              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Properties\\Resources.resx",
+              "RelativeToolTip": "Properties\\Resources.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-10-28T19:48:49.815Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "BookCardControl.Designer.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\BookCardControl\\BookCardControl.Designer.cs",
-              "RelativeDocumentMoniker": "Forms\\BookCardControl\\BookCardControl.Designer.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\BookCardControl\\BookCardControl.Designer.cs",
-              "RelativeToolTip": "Forms\\BookCardControl\\BookCardControl.Designer.cs",
-              "ViewState": "AgIAAG8AAAAAAAAAAAAqwKQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T19:37:03.502Z"
             }
           ]
         },
         {
-          "DockedWidth": 68,
-          "SelectedChildIndex": 4,
+          "DockedWidth": 43,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -227,354 +261,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Resources1.Designer.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Properties\\Resources1.Designer.cs",
-              "RelativeDocumentMoniker": "Properties\\Resources1.Designer.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Properties\\Resources1.Designer.cs",
-              "RelativeToolTip": "Properties\\Resources1.Designer.cs",
-              "ViewState": "AgIAAIkBAAAAAAAAAAAAAIkBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T20:00:58.551Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "BookCardControl.resx",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\BookCardControl\\BookCardControl.resx",
-              "RelativeDocumentMoniker": "Forms\\BookCardControl\\BookCardControl.resx",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\BookCardControl\\BookCardControl.resx",
-              "RelativeToolTip": "Forms\\BookCardControl\\BookCardControl.resx",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2025-10-28T19:56:40.82Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MainMenu.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\MainMenu\\MainMenu.cs",
-              "RelativeDocumentMoniker": "Forms\\MainMenu\\MainMenu.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\MainMenu\\MainMenu.cs",
-              "RelativeToolTip": "Forms\\MainMenu\\MainMenu.cs",
-              "ViewState": "AgIAAAUCAAAAAAAAAAAkwBgCAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T17:49:17.375Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "MainMenu.cs [Design]",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\MainMenu\\MainMenu.cs",
-              "RelativeDocumentMoniker": "Forms\\MainMenu\\MainMenu.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\MainMenu\\MainMenu.cs [Design]",
-              "RelativeToolTip": "Forms\\MainMenu\\MainMenu.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T19:19:15.95Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAwAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T14:59:49.262Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Form1.cs [Design]",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Form1.cs",
-              "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Form1.cs [Design]",
-              "RelativeToolTip": "Form1.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T14:51:01.702Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Form1.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Form1.cs",
-              "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Form1.cs",
-              "RelativeToolTip": "Form1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T14:59:39Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "AssemblyInfo.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Properties\\AssemblyInfo.cs",
-              "RelativeDocumentMoniker": "Properties\\AssemblyInfo.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Properties\\AssemblyInfo.cs",
-              "RelativeToolTip": "Properties\\AssemblyInfo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T19:28:24.688Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "CommandProject",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\CommandProject.csproj",
-              "RelativeDocumentMoniker": "CommandProject.csproj",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\CommandProject.csproj",
-              "RelativeToolTip": "CommandProject.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-10-28T19:13:43.256Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "451.png",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Resources\\Books\\Covers\\451.png",
-              "RelativeDocumentMoniker": "Resources\\Books\\Covers\\451.png",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Resources\\Books\\Covers\\451.png",
-              "RelativeToolTip": "Resources\\Books\\Covers\\451.png",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2025-10-28T19:13:37.87Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "1984.png",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Resources\\Books\\Covers\\1984.png",
-              "RelativeDocumentMoniker": "Resources\\Books\\Covers\\1984.png",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Resources\\Books\\Covers\\1984.png",
-              "RelativeToolTip": "Resources\\Books\\Covers\\1984.png",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2025-10-28T19:13:34.593Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "ClassConnectDB.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\ClassConnectDB.cs",
-              "RelativeDocumentMoniker": "ClassConnectDB.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\ClassConnectDB.cs",
-              "RelativeToolTip": "ClassConnectDB.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-23T14:34:01.828Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "LoginForm.cs [Design]",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\LoginForm.cs",
-              "RelativeDocumentMoniker": "Forms\\LoginForm.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\LoginForm.cs [Design]",
-              "RelativeToolTip": "Forms\\LoginForm.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T15:15:46.698Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "DatabaseHelper.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Database\\DatabaseHelper.cs",
-              "RelativeDocumentMoniker": "Database\\DatabaseHelper.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Database\\DatabaseHelper.cs",
-              "RelativeToolTip": "Database\\DatabaseHelper.cs",
-              "ViewState": "AgIAAAkDAAAAAAAAAAAAAAkDAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-23T14:32:31.469Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "ReaderBook.cs [Design]",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\ReaderBook.cs",
-              "RelativeDocumentMoniker": "ReaderBook.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\ReaderBook.cs [Design]",
-              "RelativeToolTip": "ReaderBook.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T17:33:24.683Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "ReaderBook.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\ReaderBook.cs",
-              "RelativeDocumentMoniker": "ReaderBook.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\ReaderBook.cs",
-              "RelativeToolTip": "ReaderBook.cs",
-              "ViewState": "AgIAAFQBAAAAAAAAAAAqwHoAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T17:34:12.027Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "BookReaderForm.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReaderForm.cs",
-              "RelativeDocumentMoniker": "BookReaderForm.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReaderForm.cs",
-              "RelativeToolTip": "BookReaderForm.cs",
-              "ViewState": "AgIAANkBAAAAAAAAAAAUwBYCAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T17:13:07.072Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "BookReaderWindow.cs [Design]",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReaderWindow.cs",
-              "RelativeDocumentMoniker": "BookReaderWindow.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReaderWindow.cs [Design]",
-              "RelativeToolTip": "BookReaderWindow.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T18:20:44.441Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "AddBookForms.cs [Design]",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\AddBookForms.cs",
-              "RelativeDocumentMoniker": "AddBookForms.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\AddBookForms.cs [Design]",
-              "RelativeToolTip": "AddBookForms.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T18:20:42.759Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "SessionManager.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Managers\\SessionManager.cs",
-              "RelativeDocumentMoniker": "Managers\\SessionManager.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Managers\\SessionManager.cs",
-              "RelativeToolTip": "Managers\\SessionManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T15:55:41.207Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "LoginForm.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\LoginForm.cs",
-              "RelativeDocumentMoniker": "Forms\\LoginForm.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Forms\\LoginForm.cs",
-              "RelativeToolTip": "Forms\\LoginForm.cs",
-              "ViewState": "AgIAAMkAAAAAAAAAAAAwwOMAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T15:18:37.379Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "BookReader.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReader.cs",
-              "RelativeDocumentMoniker": "BookReader.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReader.cs",
-              "RelativeToolTip": "BookReader.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T17:19:41.356Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "BookReader.Designer.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReader.Designer.cs",
-              "RelativeDocumentMoniker": "BookReader.Designer.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReader.Designer.cs",
-              "RelativeToolTip": "BookReader.Designer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T17:24:11.258Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "ReaderBook.Designer.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\ReaderBook.Designer.cs",
-              "RelativeDocumentMoniker": "ReaderBook.Designer.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\ReaderBook.Designer.cs",
-              "RelativeToolTip": "ReaderBook.Designer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T17:35:54.198Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "BookReaderForm.cs [Design]",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReaderForm.cs",
-              "RelativeDocumentMoniker": "BookReaderForm.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\BookReaderForm.cs [Design]",
-              "RelativeToolTip": "BookReaderForm.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T17:19:34.67Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "UPDATE_INSTRUCTIONS.md",
-              "DocumentMoniker": "C:\\Users\\alexa\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\command-project-MDK\\CommandProject\\UPDATE_INSTRUCTIONS.md",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\Users\\alexa\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\command-project-MDK\\CommandProject\\UPDATE_INSTRUCTIONS.md",
-              "ToolTip": "C:\\Users\\alexa\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\command-project-MDK\\CommandProject\\UPDATE_INSTRUCTIONS.md",
-              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\Users\\alexa\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\command-project-MDK\\CommandProject\\UPDATE_INSTRUCTIONS.md",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-10-17T15:40:45.901Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 33,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Models\\User.cs",
-              "RelativeDocumentMoniker": "Models\\User.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Models\\User.cs",
-              "RelativeToolTip": "Models\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T15:54:58.599Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "START_HERE.md",
-              "DocumentMoniker": "C:\\Users\\alexa\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\command-project-MDK\\CommandProject\\START_HERE.md",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\Users\\alexa\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\command-project-MDK\\CommandProject\\START_HERE.md",
-              "ToolTip": "C:\\Users\\alexa\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\command-project-MDK\\CommandProject\\START_HERE.md",
-              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\Users\\alexa\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\command-project-MDK\\CommandProject\\START_HERE.md",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-10-15T15:54:22.603Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "TEAM_API_GUIDE.md",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\TEAM_API_GUIDE.md",
-              "RelativeDocumentMoniker": "TEAM_API_GUIDE.md",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\TEAM_API_GUIDE.md",
-              "RelativeToolTip": "TEAM_API_GUIDE.md",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-10-15T15:54:11.012Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "ValidationHelper.cs",
-              "DocumentMoniker": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Utils\\ValidationHelper.cs",
-              "RelativeDocumentMoniker": "Utils\\ValidationHelper.cs",
-              "ToolTip": "C:\\_UsingFiles\\_Job\\_GitHubProject\\K-SyndicateGame\\command-project-MDK\\CommandProject\\Utils\\ValidationHelper.cs",
-              "RelativeToolTip": "Utils\\ValidationHelper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T15:15:39.571Z"
             }
           ]
         }

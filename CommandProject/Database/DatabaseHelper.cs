@@ -721,6 +721,31 @@ ORDER BY a.LastName, a.FirstName";
         }
 
         /// <summary>
+        /// Обновляет путь к файлу книги
+        /// </summary>
+        public bool UpdateBookFilePath(int bookId, string filePath)
+        {
+            try
+            {
+                using(SqlConnection connection = ClassConnectDB.GetOpenConnection())
+                {
+                    string sql = "UPDATE Books SET FilePath = @FilePath WHERE BookID = @BookID";
+                    using(SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@FilePath", string.IsNullOrEmpty(filePath) ? (object)DBNull.Value : filePath);
+                        command.Parameters.AddWithValue("@BookID", bookId);
+                        int rowsAffected = command.ExecuteNonQuery();
+                        return rowsAffected > 0;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new Exception($"Ошибка обновления пути к файлу книги: {ex.Message}");
+            }
+        }
+
+        /// <summary>
         /// Возвращает данные книги по ее идентификатору.
         /// Возвращает DataTable с одной строкой (если найдена) или пустую таблицу.
         /// </summary>

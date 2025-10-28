@@ -1,4 +1,7 @@
-﻿using System;
+﻿
+using CommandProject.Database;
+using Newtonsoft.Json.Bson;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CommandProject.Database;
 
 namespace CommandProject
 {
@@ -33,7 +35,7 @@ namespace CommandProject
             {
                 LoadBook(bookId);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке книги: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -52,7 +54,7 @@ namespace CommandProject
             {
                 LoadBook(bookId);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке книги: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -60,7 +62,7 @@ namespace CommandProject
 
         private void ConfigureFormForUserRole()
         {
-            if (isAdminMode || currentUserRole == "Admin")
+            if(isAdminMode || currentUserRole == "Admin")
             {
                 // Режим администратора - все элементы доступны
                 SetAdminMode();
@@ -138,7 +140,7 @@ namespace CommandProject
             CBLanguages.Enabled = enabled;
             CBGenres.Enabled = enabled;
 
-            if (!enabled)
+            if(!enabled)
             {
                 TBTitle.BackColor = SystemColors.Control;
                 RTBDescription.BackColor = SystemColors.Control;
@@ -158,9 +160,9 @@ namespace CommandProject
         {
             var db = new DatabaseHelper();
             DataTable dt = db.GetBookById(bookId);
-            if (dt == null || dt.Rows.Count == 0)
+            if(dt == null || dt.Rows.Count == 0)
             {
-                MessageBox.Show("Книга не найдена.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Книга не найдена в базе данных.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -171,9 +173,16 @@ namespace CommandProject
                 RTBDescription.Text = row.Table.Columns.Contains("Description") && row["Description"] != DBNull.Value ? row["Description"].ToString() : string.Empty;
 
                 // Получаем путь к файлу книги из базы данных
-                if (row.Table.Columns.Contains("FilePath") && row["FilePath"] != DBNull.Value)
+                if(row.Table.Columns.Contains("FilePath") && row["FilePath"] != DBNull.Value)
                 {
                     bookFilePath = row["FilePath"].ToString();
+
+                    // Проверяем существует ли файл
+                    if(!File.Exists(bookFilePath))
+                    {
+                        MessageBox.Show($"Файл книги не найден по указанному пути:\n{bookFilePath}\n\nВы можете выбрать файл вручную при чтении.",
+                            "Файл не найден", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
                 else
                 {
@@ -182,29 +191,29 @@ namespace CommandProject
                 }
 
                 // Загрузка жанров
-                if (row.Table.Columns.Contains("Genres") && row["Genres"] != DBNull.Value)
+                if(row.Table.Columns.Contains("Genres") && row["Genres"] != DBNull.Value)
                 {
                     string genres = row["Genres"].ToString();
-                    if (!string.IsNullOrEmpty(genres))
+                    if(!string.IsNullOrEmpty(genres))
                     {
                         CBGenres.Text = genres;
                     }
                 }
 
                 // Загрузка языков
-                if (row.Table.Columns.Contains("Language") && row["Language"] != DBNull.Value)
+                if(row.Table.Columns.Contains("Language") && row["Language"] != DBNull.Value)
                 {
                     string language = row["Language"].ToString();
-                    if (!string.IsNullOrEmpty(language))
+                    if(!string.IsNullOrEmpty(language))
                     {
                         CBLanguages.Text = language;
                     }
                 }
 
                 // Обновляем заголовок формы
-                if (!string.IsNullOrEmpty(TBTitle.Text))
+                if(!string.IsNullOrEmpty(TBTitle.Text))
                 {
-                    if (isAdminMode || currentUserRole == "Admin")
+                    if(isAdminMode || currentUserRole == "Admin")
                     {
                         this.Text = $"Редактирование: {TBTitle.Text} - Книгоfeel";
                     }
@@ -213,19 +222,8 @@ namespace CommandProject
                         this.Text = $"Чтение: {TBTitle.Text} - Книгоfeel";
                     }
                 }
-
-                // Дополнительная диагностика для пути к файлу
-                string raw = (row["FilePath"] as string ?? "").Trim();
-                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-                if (raw.Contains("|DataDirectory|"))
-                    raw = raw.Replace("|DataDirectory|", (AppDomain.CurrentDomain.GetData("DataDirectory") ?? baseDir).ToString());
-                string candidate = Path.IsPathRooted(raw) ? raw : Path.Combine(baseDir, raw);
-                if (!Path.HasExtension(candidate) && row.Table.Columns.Contains("FileFormat") && row["FileFormat"] != DBNull.Value)
-                    candidate = candidate + "." + row["FileFormat"].ToString().Trim().TrimStart('.');
-                candidate = Path.GetFullPath(candidate);
-                MessageBox.Show(candidate + "\nExists=" + File.Exists(candidate));
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке данных книги: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -238,58 +236,138 @@ namespace CommandProject
                 string baseDir = AppDomain.CurrentDomain.BaseDirectory;
                 string booksFolder = Path.Combine(baseDir, "Resources", "Books");
 
-                if (!Directory.Exists(booksFolder))
+                // Создаем папку если её нет
+                if(!Directory.Exists(booksFolder))
                 {
                     Directory.CreateDirectory(booksFolder);
+                    MessageBox.Show($"Папка для книг создана: {booksFolder}\nПожалуйста, поместите файлы книг в эту папку.",
+                        "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return null;
                 }
 
-                // Ищем файлы с похожими названиями
-                string[] supportedFormats = { "*.pdf", "*.fb2", "*.txt" };
-                string searchPattern = bookTitle.Replace(" ", "_").Replace(":", "").Replace("?", "");
-
-                foreach (string format in supportedFormats)
+                // Показываем какие файлы есть в папке (для отладки)
+                string[] allFiles = Directory.GetFiles(booksFolder, "*.*", SearchOption.AllDirectories);
+                string filesInfo = $"Найдено файлов в {booksFolder}: {allFiles.Length}\n";
+                foreach(string file in allFiles.Take(10)) // покажем первые 10 файлов
                 {
-                    var files = Directory.GetFiles(booksFolder, format)
-                        .Where(f => Path.GetFileNameWithoutExtension(f).ToLower().Contains(searchPattern.ToLower()))
-                        .ToArray();
+                    filesInfo += $"- {Path.GetFileName(file)}\n";
+                }
+                if(allFiles.Length > 10)
+                    filesInfo += "... и другие\n";
 
-                    if (files.Length > 0)
+                // Ищем файлы с разными вариантами названий
+                string[] searchPatterns = {
+                    bookTitle,
+                    bookTitle.Replace(" ", "_"),
+                    bookTitle.Replace(" ", "-"),
+                    bookTitle.Replace(":", ""),
+                    bookTitle.Replace("?", ""),
+                    bookTitle.Replace("!", ""),
+                    loadedBookId?.ToString() ?? "0"
+                };
+
+                string[] supportedFormats = { "*.pdf", "*.fb2", "*.txt", "*.epub", "*.doc", "*.docx" };
+
+                foreach(string format in supportedFormats)
+                {
+                    try
                     {
-                        return files[0]; // Возвращаем первый найденный файл
+                        var files = Directory.GetFiles(booksFolder, format)
+                            .Where(f => searchPatterns.Any(pattern =>
+                                Path.GetFileNameWithoutExtension(f).ToLower().Contains(pattern.ToLower()) ||
+                                f.ToLower().Contains(pattern.ToLower())))
+                            .ToArray();
+
+                        if(files.Length > 0)
+                        {
+                            MessageBox.Show($"Найден файл: {Path.GetFileName(files[0])}\nПо шаблону: {bookTitle}",
+                                "Файл найден", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return files[0];
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        // Продолжаем поиск с другими форматами
+                        continue;
                     }
                 }
 
-                // Если не нашли по названию, ищем любой файл с ID книги
-                string idPattern = $"*{loadedBookId}*";
-                foreach (string format in supportedFormats)
+                // Если не нашли по названию, покажем все доступные файлы
+                if(allFiles.Length > 0)
                 {
-                    var files = Directory.GetFiles(booksFolder, idPattern + format);
-                    if (files.Length > 0)
+                    string availableFiles = "Доступные файлы в папке книг:\n";
+                    foreach(string file in allFiles.Take(20))
                     {
-                        return files[0];
+                        availableFiles += $"- {Path.GetFileName(file)}\n";
                     }
+
+                    MessageBox.Show($"Файл для книги '{bookTitle}' не найден.\n\n{availableFiles}\n\nПапка: {booksFolder}",
+                        "Файл не найден", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show($"В папке книг нет файлов.\n\nПапка: {booksFolder}\n\nПожалуйста, поместите файлы книг в эту папку.",
+                        "Папка пуста", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
                 return null;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                MessageBox.Show($"Ошибка при поиске файла книги: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"Ошибка при поиске файла книги: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return null;
+            }
+        }
+
+        private string SelectBookFileManually()
+        {
+            using(OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Все поддерживаемые форматы (*.pdf;*.fb2;*.txt;*.epub;*.doc;*.docx)|*.pdf;*.fb2;*.txt;*.epub;*.doc;*.docx|PDF файлы (*.pdf)|*.pdf|FB2 файлы (*.fb2)|*.fb2|Текстовые файлы (*.txt)|*.txt|EPUB файлы (*.epub)|*.epub|Документы Word (*.doc;*.docx)|*.doc;*.docx|Все файлы (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.Title = "Выберите файл книги";
+                openFileDialog.RestoreDirectory = true;
+
+                if(openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Сохраняем путь в базу данных для будущего использования
+                    SaveBookFilePathToDatabase(openFileDialog.FileName);
+                    return openFileDialog.FileName;
+                }
+            }
+            return null;
+        }
+
+        private void SaveBookFilePathToDatabase(string filePath)
+        {
+            try
+            {
+                if(loadedBookId.HasValue)
+                {
+                    var db = new DatabaseHelper();
+                    db.UpdateBookFilePath(loadedBookId.Value, filePath);
+                    MessageBox.Show($"Путь к файлу сохранен в базе данных.", "Успех",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Не удалось сохранить путь в базу данных: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void buttonFilters_Click(object sender, EventArgs e)
         {
-            if (!isAdminMode && currentUserRole != "Admin")
+            if(!isAdminMode && currentUserRole != "Admin")
             {
                 MessageBox.Show("У вас нет прав для редактирования книг.", "Доступ запрещен",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(TBTitle.Text))
+            if(string.IsNullOrWhiteSpace(TBTitle.Text))
             {
                 MessageBox.Show("Название книги не может быть пустым!", "Ошибка ввода",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -297,7 +375,7 @@ namespace CommandProject
                 return;
             }
 
-            if (CBLanguages.SelectedItem == null && string.IsNullOrWhiteSpace(CBLanguages.Text))
+            if(CBLanguages.SelectedItem == null && string.IsNullOrWhiteSpace(CBLanguages.Text))
             {
                 MessageBox.Show("Выберите язык книги!", "Ошибка ввода",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -305,7 +383,7 @@ namespace CommandProject
                 return;
             }
 
-            if (CBGenres.SelectedItem == null && string.IsNullOrWhiteSpace(CBGenres.Text))
+            if(CBGenres.SelectedItem == null && string.IsNullOrWhiteSpace(CBGenres.Text))
             {
                 MessageBox.Show("Выберите жанр книги!", "Ошибка ввода",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -315,25 +393,25 @@ namespace CommandProject
 
             try
             {
-                using (SqlConnection conn = ClassConnectDB.GetOpenConnection())
+                using(SqlConnection conn = ClassConnectDB.GetOpenConnection())
                 {
-                    string query = @"UPDATE Book SET 
+                    string query = @"UPDATE Books SET 
                                    Title = @Title,
                                    Language = @Language,
                                    Genres = @Genres,
                                    Description = @Description
-                                   WHERE ID = @ID_Book";
+                                   WHERE BookID = @BookID";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@Title", TBTitle.Text.Trim());
                     cmd.Parameters.AddWithValue("@Language", CBLanguages.Text.Trim());
                     cmd.Parameters.AddWithValue("@Genres", CBGenres.Text.Trim());
                     cmd.Parameters.AddWithValue("@Description", RTBDescription.Text.Trim());
-                    cmd.Parameters.AddWithValue("@ID_Book", loadedBookId);
+                    cmd.Parameters.AddWithValue("@BookID", loadedBookId);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
 
-                    if (rowsAffected > 0)
+                    if(rowsAffected > 0)
                     {
                         MessageBox.Show("Изменения сохранены успешно!",
                                       "Успешно",
@@ -351,7 +429,7 @@ namespace CommandProject
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show($"Ошибка при сохранении изменений: {ex.Message}",
                                "Ошибка",
@@ -362,7 +440,7 @@ namespace CommandProject
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!isAdminMode && currentUserRole != "Admin")
+            if(!isAdminMode && currentUserRole != "Admin")
             {
                 this.Close();
                 return;
@@ -373,7 +451,7 @@ namespace CommandProject
                                        MessageBoxButtons.YesNo,
                                        MessageBoxIcon.Question);
 
-            if (result == DialogResult.Yes)
+            if(result == DialogResult.Yes)
             {
                 this.DialogResult = DialogResult.Cancel;
                 this.Close();
@@ -382,40 +460,108 @@ namespace CommandProject
 
         private void buttonRead_Click(object sender, EventArgs e)
         {
-            // Запуск чтения книги для пользователя
             try
             {
-                Console.WriteLine("BookFilePath: " + bookFilePath);
-                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-                var bookPath = /*Path.Combine(baseDir, */bookFilePath/*)*/;
-                Console.WriteLine("BookFileFullPath: " + bookPath);
-                Console.WriteLine("FileExist: " + File.Exists(bookPath));
-                if (string.IsNullOrEmpty(bookFilePath) || !File.Exists(bookPath))
+                // Если путь не указан или файл не существует, предлагаем выбрать вручную
+                if(string.IsNullOrEmpty(bookFilePath) || !File.Exists(bookFilePath))
                 {
-                    MessageBox.Show("Файл книги не найден. Пожалуйста, обратитесь к администратору.",
-                        "Файл не найден", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    var dialogResult = MessageBox.Show($"Файл книги не найден по указанному пути.\n\nТекущий путь: {bookFilePath}\n\nХотите выбрать файл вручную?",
+                        "Файл не найден", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if(dialogResult == DialogResult.Yes)
+                    {
+                        string selectedPath = SelectBookFileManually();
+                        if(!string.IsNullOrEmpty(selectedPath))
+                        {
+                            bookFilePath = selectedPath;
+                        }
+                        else
+                        {
+                            return; // Пользователь отменил выбор
+                        }
+                    }
+                    else
+                    {
+                        return; // Пользователь отказался выбирать файл
+                    }
+                }
+
+                // Проверяем существование файла после выбора
+                if(!File.Exists(bookFilePath))
+                {
+                    MessageBox.Show($"Файл не существует: {bookFilePath}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                // Открываем существующую форму для чтения книг
-                using (var readingForm = new ReaderBook())
+                // Показываем информацию о файле
+                FileInfo fileInfo = new FileInfo(bookFilePath);
+                string fileInfoText = $"Открываем файл:\n" +
+                                     $"Название: {Path.GetFileName(bookFilePath)}\n" +
+                                     $"Размер: {fileInfo.Length / 1024} KB\n" +
+                                     $"Путь: {bookFilePath}";
+
+                // Определяем тип файла и открываем соответствующую читалку
+                string extension = Path.GetExtension(bookFilePath).ToLower();
+
+                switch(extension)
                 {
-                    // Загружаем книгу в читалку
-                    readingForm.LoadBookFromPath(bookPath);
-                    readingForm.ShowDialog(this);
+                    case ".pdf":
+                    case ".fb2":
+                    case ".txt":
+                        OpenInBookReader(bookFilePath);
+                        break;
+                    default:
+                        OpenBookWithDefaultProgram(bookFilePath);
+                        break;
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                MessageBox.Show($"Ошибка при запуске чтения: {ex.Message}", "Ошибка",
+                MessageBox.Show($"Ошибка при открытии книги: {ex.Message}", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenInBookReader(string filePath)
+        {
+            try
+            {
+                var readingForm = new ReaderBook();
+
+                // Используем метод LoadBookFromPath
+                readingForm.LoadBookFromPath(filePath);
+                readingForm.Show();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Ошибка при открытии книги в читалке: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenBookWithDefaultProgram(string filePath)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = filePath,
+                    UseShellExecute = true
+                });
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Не удалось открыть файл: {ex.Message}\n\n" +
+                               $"Попробуйте открыть файл вручную: {filePath}",
+                               "Ошибка открытия", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void BookReaderForm_Load(object sender, EventArgs e)
         {
             // Загрузка списков для комбобоксов (только для админа)
-            if (isAdminMode || currentUserRole == "Admin")
+            if(isAdminMode || currentUserRole == "Admin")
             {
                 LoadComboBoxData();
             }
@@ -425,32 +571,32 @@ namespace CommandProject
         {
             try
             {
-                using (SqlConnection conn = ClassConnectDB.GetOpenConnection())
+                using(SqlConnection conn = ClassConnectDB.GetOpenConnection())
                 {
-                    string languageQuery = "SELECT DISTINCT Language FROM Book WHERE Language IS NOT NULL AND Language != ''";
+                    string languageQuery = "SELECT DISTINCT Language FROM Books WHERE Language IS NOT NULL AND Language != ''";
                     SqlCommand languageCmd = new SqlCommand(languageQuery, conn);
                     SqlDataReader languageReader = languageCmd.ExecuteReader();
 
                     CBLanguages.Items.Clear();
-                    while (languageReader.Read())
+                    while(languageReader.Read())
                     {
                         CBLanguages.Items.Add(languageReader["Language"]);
                     }
                     languageReader.Close();
 
-                    string genreQuery = "SELECT DISTINCT Genres FROM Book WHERE Genres IS NOT NULL AND Genres != ''";
+                    string genreQuery = "SELECT DISTINCT Genres FROM Books WHERE Genres IS NOT NULL AND Genres != ''";
                     SqlCommand genreCmd = new SqlCommand(genreQuery, conn);
                     SqlDataReader genreReader = genreCmd.ExecuteReader();
 
                     CBGenres.Items.Clear();
-                    while (genreReader.Read())
+                    while(genreReader.Read())
                     {
                         CBGenres.Items.Add(genreReader["Genres"]);
                     }
                     genreReader.Close();
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке справочников: {ex.Message}", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -461,7 +607,7 @@ namespace CommandProject
         {
             var contextMenu = new ContextMenuStrip();
 
-            if (isAdminMode || currentUserRole == "Admin")
+            if(isAdminMode || currentUserRole == "Admin")
             {
                 contextMenu.Items.Add("Режим администратора", null, (s, args) =>
                 {
@@ -494,6 +640,7 @@ namespace CommandProject
                          $"Язык: {CBLanguages.Text}\n" +
                          $"Жанр: {CBGenres.Text}\n" +
                          $"Файл: {fileInfo}\n" +
+                         $"Путь к файлу: {bookFilePath}\n" +
                          $"Описание: {RTBDescription.Text}\n\n" +
                          $"Режим: {(isAdminMode || currentUserRole == "Admin" ? "Администратор" : "Чтение")}";
 
@@ -513,7 +660,7 @@ namespace CommandProject
             bool isAdmin = CanUserEditBooks(userRole);
             BookReaderForm form;
 
-            if (isAdmin)
+            if(isAdmin)
             {
                 form = new BookReaderForm(bookId, true, userRole);
             }
@@ -522,7 +669,7 @@ namespace CommandProject
                 form = new BookReaderForm(bookId, userRole);
             }
 
-            if (parentForm != null)
+            if(parentForm != null)
             {
                 form.ShowDialog(parentForm);
             }
@@ -530,6 +677,95 @@ namespace CommandProject
             {
                 form.ShowDialog();
             }
+        }
+
+        private void buttonManageFile_Click(object sender, EventArgs e)
+        {
+            ManageBookFile();
+        }
+
+        private void ManageBookFile()
+        {
+            var menu = new ContextMenuStrip();
+
+            menu.Items.Add("Показать текущий путь", null, (s, args) =>
+            {
+                MessageBox.Show($"Текущий путь к файлу: {bookFilePath}\nФайл существует: {File.Exists(bookFilePath)}",
+                    "Информация о файле", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            });
+
+            menu.Items.Add("Изменить путь к файлу", null, (s, args) =>
+            {
+                string newPath = SelectBookFileManually();
+                if(!string.IsNullOrEmpty(newPath))
+                {
+                    bookFilePath = newPath;
+                    MessageBox.Show("Путь к файлу обновлен", "Успех",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            });
+
+            menu.Items.Add("Показать папку книг", null, (s, args) =>
+            {
+                string booksFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Books");
+                if(Directory.Exists(booksFolder))
+                {
+                    System.Diagnostics.Process.Start("explorer.exe", booksFolder);
+                }
+                else
+                {
+                    MessageBox.Show($"Папка не существует: {booksFolder}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            });
+
+            menu.Items.Add("Проверить все файлы", null, (s, args) =>
+            {
+                CheckAllBookFiles();
+            });
+
+            menu.Show(buttonManageFile, new Point(0, buttonManageFile.Height));
+        }
+
+        private void CheckAllBookFiles()
+        {
+            try
+            {
+                string booksFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Books");
+                string report = $"Проверка папки книг: {booksFolder}\n\n";
+
+                if(Directory.Exists(booksFolder))
+                {
+                    var allFiles = Directory.GetFiles(booksFolder, "*.*", SearchOption.AllDirectories);
+                    report += $"Найдено файлов: {allFiles.Length}\n\n";
+
+                    foreach(var file in allFiles.Take(50)) // Покажем первые 50 файлов
+                    {
+                        FileInfo fi = new FileInfo(file);
+                        report += $"{Path.GetFileName(file)} ({fi.Length / 1024} KB)\n";
+                    }
+
+                    if(allFiles.Length > 50)
+                        report += $"\n... и еще {allFiles.Length - 50} файлов";
+                }
+                else
+                {
+                    report += "Папка не существует!";
+                }
+
+                MessageBox.Show(report, "Отчет о файлах", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Ошибка при проверке файлов: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ReaderBook bookReaders = new ReaderBook();
+            bookReaders.Show();
         }
     }
 }

@@ -17,6 +17,7 @@ namespace CommandProject
 {
     public partial class ReaderBook : Form
     {
+
         private List<string> bookPages;
         private int currentPage = 0;
         private string currentBookPath = string.Empty;
@@ -30,7 +31,7 @@ namespace CommandProject
 
         private void InitializeBookInfo()
         {
-            currentBookInfo = new BookInfo();
+
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
@@ -52,9 +53,6 @@ namespace CommandProject
         {
             try
             {
-                Cursor = Cursors.WaitCursor;
-                statusLabel.Text = "Загрузка книги...";
-
                 currentBookPath = filePath;
                 bookPages = new List<string>();
                 currentPage = 0;
@@ -82,26 +80,17 @@ namespace CommandProject
                 {
                     ShowPage(0);
                     statusLabel.Text = $"Загружено: {Path.GetFileName(filePath)} - Страниц: {bookPages.Count}";
-
-                    // Показываем информацию о книге
-                    ShowBookInfo();
                 }
                 else
                 {
                     MessageBox.Show("Не удалось загрузить содержимое книги", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    statusLabel.Text = "Ошибка загрузки книги";
                 }
             }
             catch(Exception ex)
             {
                 MessageBox.Show($"Ошибка загрузки книги: {ex.Message}", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-                statusLabel.Text = $"Ошибка: {ex.Message}";
-            }
-            finally
-            {
-                Cursor = Cursors.Default;
             }
         }
 
@@ -109,26 +98,16 @@ namespace CommandProject
         {
             try
             {
-                using(var pdfDoc = new PdfDocument(new PdfReader(filePath)))
+                using(PdfReader reader = new PdfReader(filePath))
+                using(PdfDocument pdfDoc = new PdfDocument(reader))
                 {
                     for(int pageNum = 1; pageNum <= pdfDoc.GetNumberOfPages(); pageNum++)
                     {
-                        var page = pdfDoc.GetPage(pageNum);
                         var strategy = new SimpleTextExtractionStrategy();
-                        var pageText = PdfTextExtractor.GetTextFromPage(page, strategy);
-                        bookPages.Add(pageText?.Trim() ?? "");
+                        var pageText = PdfTextExtractor.GetTextFromPage(pdfDoc.GetPage(pageNum), strategy);
+                        bookPages.Add(pageText);
                     }
                 }
-
-                // Для PDF файлов создаем базовую информацию
-                currentBookInfo = new BookInfo
-                {
-                    Title = Path.GetFileNameWithoutExtension(filePath),
-                    Author = "Неизвестен",
-                    Genre = "PDF документ",
-                    Language = "Русский",
-                    Description = "PDF документ"
-                };
             }
             catch(Exception ex)
             {
@@ -150,32 +129,24 @@ namespace CommandProject
                 // Извлекаем информацию о книге
                 ExtractFb2Info(xmlDoc, nsmgr);
 
-                // Извлекаем основной текст
-                XmlNode bodyNode = xmlDoc.SelectSingleNode("//fb:body[1]", nsmgr);
-                if(bodyNode == null)
+                // Извлекаем все текстовые элементы
+                XmlNodeList bodyNodes = xmlDoc.SelectNodes("//fb:body", nsmgr);
+
+                StringBuilder bookText = new StringBuilder();
+
+                foreach(XmlNode bodyNode in bodyNodes)
                 {
-                    throw new Exception("Не найден основной текст книги");
+                    bookText.AppendLine(ExtractTextFromNode(bodyNode));
                 }
 
-                string fullText = ExtractTextFromNode(bodyNode);
-
                 // Разбиваем на страницы
-                int pageSize = 2000; // символов на страницу
+                string fullText = bookText.ToString();
+                int pageSize = 3000; // символов на страницу
 
                 for(int i = 0; i < fullText.Length; i += pageSize)
                 {
                     int length = Math.Min(pageSize, fullText.Length - i);
-                    string pageText = fullText.Substring(i, length).Trim();
-                    if(!string.IsNullOrEmpty(pageText))
-                    {
-                        bookPages.Add(pageText);
-                    }
-                }
-
-                // Если книга пустая, добавляем заглушку
-                if(bookPages.Count == 0)
-                {
-                    bookPages.Add("Содержимое книги пусто или не распознано.");
+                    bookPages.Add(fullText.Substring(i, length));
                 }
             }
             catch(Exception ex)
@@ -188,63 +159,41 @@ namespace CommandProject
         {
             currentBookInfo = new BookInfo();
 
-            try
-            {
-                // Извлекаем название
-                XmlNode titleNode = xmlDoc.SelectSingleNode("//fb:description/fb:title-info/fb:book-title", nsmgr);
-                if(titleNode != null)
-                    currentBookInfo.Title = titleNode.InnerText.Trim();
+            // Извлекаем название
+            XmlNode titleNode = xmlDoc.SelectSingleNode("//fb:book-title", nsmgr);
+            if(titleNode != null)
+                currentBookInfo.Title = titleNode.InnerText;
 
-                // Извлекаем автора
-                XmlNode firstNameNode = xmlDoc.SelectSingleNode("//fb:description/fb:title-info/fb:author/fb:first-name", nsmgr);
-                XmlNode lastNameNode = xmlDoc.SelectSingleNode("//fb:description/fb:title-info/fb:author/fb:last-name", nsmgr);
+            // Извлекаем автора
+            XmlNode authorNode = xmlDoc.SelectSingleNode("//fb:author/fb:first-name", nsmgr);
+            if(authorNode != null)
+                currentBookInfo.Author = authorNode.InnerText;
 
-                string author = "";
-                if(firstNameNode != null)
-                    author += firstNameNode.InnerText.Trim();
-                if(lastNameNode != null)
-                    author += " " + lastNameNode.InnerText.Trim();
+            // Извлекаем жанр
+            XmlNode genreNode = xmlDoc.SelectSingleNode("//fb:genre", nsmgr);
+            if(genreNode != null)
+                currentBookInfo.Genre = genreNode.InnerText;
 
-                currentBookInfo.Author = string.IsNullOrEmpty(author.Trim()) ? "Неизвестен" : author.Trim();
+            // Извлекаем язык
+            XmlNode langNode = xmlDoc.SelectSingleNode("//fb:lang", nsmgr);
+            if(langNode != null)
+                currentBookInfo.Language = langNode.InnerText;
 
-                // Извлекаем жанр
-                XmlNode genreNode = xmlDoc.SelectSingleNode("//fb:description/fb:title-info/fb:genre", nsmgr);
-                if(genreNode != null)
-                    currentBookInfo.Genre = genreNode.InnerText.Trim();
-
-                // Извлекаем язык
-                XmlNode langNode = xmlDoc.SelectSingleNode("//fb:description/fb:title-info/fb:lang", nsmgr);
-                if(langNode != null)
-                    currentBookInfo.Language = langNode.InnerText.Trim();
-
-                // Извлекаем аннотацию
-                XmlNode annotationNode = xmlDoc.SelectSingleNode("//fb:description/fb:title-info/fb:annotation", nsmgr);
-                if(annotationNode != null)
-                    currentBookInfo.Description = ExtractTextFromNode(annotationNode);
-            }
-            catch(Exception ex)
-            {
-                // Если не удалось извлечь информацию, используем значения по умолчанию
-                currentBookInfo.Title = Path.GetFileNameWithoutExtension(currentBookPath);
-                currentBookInfo.Author = "Неизвестен";
-                currentBookInfo.Genre = "Книга";
-                currentBookInfo.Language = "Русский";
-                currentBookInfo.Description = "FB2 книга";
-            }
+            // Извлекаем аннотацию
+            XmlNode annotationNode = xmlDoc.SelectSingleNode("//fb:annotation", nsmgr);
+            if(annotationNode != null)
+                currentBookInfo.Description = ExtractTextFromNode(annotationNode);
         }
 
         private string ExtractTextFromNode(XmlNode node)
         {
-            if(node == null)
-                return string.Empty;
-
             StringBuilder text = new StringBuilder();
 
             foreach(XmlNode childNode in node.ChildNodes)
             {
                 if(childNode.NodeType == XmlNodeType.Text)
                 {
-                    text.Append(childNode.Value?.Trim() + " ");
+                    text.Append(childNode.Value);
                 }
                 else if(childNode.Name == "p" || childNode.Name == "title")
                 {
@@ -254,11 +203,6 @@ namespace CommandProject
                 else if(childNode.Name == "empty-line")
                 {
                     text.AppendLine();
-                    text.AppendLine();
-                }
-                else if(childNode.Name == "strong" || childNode.Name == "emphasis")
-                {
-                    text.Append(ExtractTextFromNode(childNode) + " ");
                 }
                 else
                 {
@@ -274,16 +218,12 @@ namespace CommandProject
             try
             {
                 string text = File.ReadAllText(filePath, Encoding.UTF8);
-                int pageSize = 2000; // символов на страницу
+                int pageSize = 3000; // символов на страницу
 
                 for(int i = 0; i < text.Length; i += pageSize)
                 {
                     int length = Math.Min(pageSize, text.Length - i);
-                    string pageText = text.Substring(i, length).Trim();
-                    if(!string.IsNullOrEmpty(pageText))
-                    {
-                        bookPages.Add(pageText);
-                    }
+                    bookPages.Add(text.Substring(i, length));
                 }
 
                 // Для TXT файлов создаем базовую информацию
@@ -291,7 +231,7 @@ namespace CommandProject
                 {
                     Title = Path.GetFileNameWithoutExtension(filePath),
                     Author = "Неизвестен",
-                    Genre = "Текстовый документ",
+                    Genre = "Текст",
                     Language = "Русский",
                     Description = "Текстовый документ"
                 };
@@ -302,31 +242,11 @@ namespace CommandProject
             }
         }
 
-        private void ShowBookInfo()
-        {
-            string info = $"Название: {currentBookInfo.Title}\n" +
-                         $"Автор: {currentBookInfo.Author}\n" +
-                         $"Жанр: {currentBookInfo.Genre}\n" +
-                         $"Язык: {currentBookInfo.Language}\n" +
-                         $"Описание: {currentBookInfo.Description}";
-
-            // Можно показать в MessageBox или в статусной строке
-            statusLabel.Text = $"{currentBookInfo.Title} - {currentBookInfo.Author}";
-        }
 
         private void ShowPage(int pageIndex)
         {
-            if(bookPages == null || bookPages.Count == 0)
-            {
-                txtContent.Text = "Книга не загружена или пуста.";
+            if(bookPages == null || pageIndex < 0 || pageIndex >= bookPages.Count)
                 return;
-            }
-
-            // Проверяем границы
-            if(pageIndex < 0)
-                pageIndex = 0;
-            if(pageIndex >= bookPages.Count)
-                pageIndex = bookPages.Count - 1;
 
             txtContent.Text = bookPages[pageIndex];
             currentPage = pageIndex;
@@ -337,21 +257,13 @@ namespace CommandProject
 
         private void UpdatePageInfo()
         {
-            if(bookPages == null || bookPages.Count == 0)
-            {
-                lblPageInfo.Text = "Страница: 0/0";
-                txtPageNumber.Text = "0";
-            }
-            else
-            {
-                lblPageInfo.Text = $"Страница: {currentPage + 1}/{bookPages.Count}";
-                txtPageNumber.Text = (currentPage + 1).ToString();
-            }
+            lblPageInfo.Text = $"Страница: {currentPage + 1}/{bookPages.Count}";
+            txtPageNumber.Text = (currentPage + 1).ToString();
         }
 
         private void btnPrev_Click(object sender, EventArgs e)
         {
-            if(bookPages != null && currentPage > 0)
+            if(currentPage > 0)
             {
                 ShowPage(currentPage - 1);
             }
@@ -359,7 +271,7 @@ namespace CommandProject
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if(bookPages != null && currentPage < bookPages.Count - 1)
+            if(currentPage < bookPages.Count - 1)
             {
                 ShowPage(currentPage + 1);
             }
@@ -381,14 +293,7 @@ namespace CommandProject
 
         private void GoToPage()
         {
-            if(bookPages == null || bookPages.Count == 0)
-            {
-                MessageBox.Show("Книга не загружена", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if(int.TryParse(txtPageNumber.Text, out int pageNumber) && pageNumber > 0)
+            if(int.TryParse(txtPageNumber.Text, out int pageNumber))
             {
                 int pageIndex = pageNumber - 1;
                 if(pageIndex >= 0 && pageIndex < bookPages.Count)
@@ -397,35 +302,17 @@ namespace CommandProject
                 }
                 else
                 {
-                    MessageBox.Show($"Номер страницы должен быть от 1 до {bookPages.Count}", "Ошибка",
+                    MessageBox.Show("Недопустимый номер страницы", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-            }
-            else
-            {
-                MessageBox.Show("Введите корректный номер страницы", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            try
-            {
-                // Сохранение информации о книге или текущей позиции
-                string saveInfo = $"Текущая книга: {currentBookInfo.Title}\n" +
-                                 $"Текущая страница: {currentPage + 1} из {bookPages?.Count ?? 0}\n" +
-                                 $"Автор: {currentBookInfo.Author}";
-
-                // Можно сохранить в файл или просто показать сообщение
-                MessageBox.Show(saveInfo, "Информация о книге",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show($"Ошибка при сохранении: {ex.Message}", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            // Сохранение информации о книге или текущей позиции
+            MessageBox.Show("Информация о книге сохранена", "Сохранение",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -439,41 +326,14 @@ namespace CommandProject
             var contextMenu = new ContextMenuStrip();
             contextMenu.Items.Add("О программе", null, (s, args) =>
             {
-                MessageBox.Show("Книгоfeel - Читалка книг\nВерсия 1.0\n\nПоддерживаемые форматы:\n- PDF\n- FB2\n- TXT", "О программе");
+                MessageBox.Show("Книгоfeel - Читалка книг\nВерсия 1.0", "О программе");
             });
-            contextMenu.Items.Add("Информация о книге", null, (s, args) =>
-            {
-                ShowBookInfoMessage();
-            });
-            contextMenu.Items.Add("-"); // Разделитель
             contextMenu.Items.Add("Настройки", null, (s, args) =>
             {
                 MessageBox.Show("Настройки будут доступны в следующей версии", "Настройки");
             });
 
             contextMenu.Show(buttonSettings, new Point(0, buttonSettings.Height));
-        }
-
-        private void ShowBookInfoMessage()
-        {
-            if(currentBookInfo != null)
-            {
-                string info = $"Название: {currentBookInfo.Title}\n" +
-                             $"Автор: {currentBookInfo.Author}\n" +
-                             $"Жанр: {currentBookInfo.Genre}\n" +
-                             $"Язык: {currentBookInfo.Language}\n" +
-                             $"Описание: {currentBookInfo.Description}\n\n" +
-                             $"Файл: {Path.GetFileName(currentBookPath)}\n" +
-                             $"Страниц: {bookPages?.Count ?? 0}";
-
-                MessageBox.Show(info, "Информация о книге",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show("Книга не загружена", "Информация",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -483,11 +343,9 @@ namespace CommandProject
             {
                 case Keys.Right:
                 case Keys.Space:
-                case Keys.PageDown:
                     btnNext_Click(null, null);
                     return true;
                 case Keys.Left:
-                case Keys.PageUp:
                     btnPrev_Click(null, null);
                     return true;
                 case Keys.Home:
@@ -497,18 +355,47 @@ namespace CommandProject
                     if(bookPages != null)
                         ShowPage(bookPages.Count - 1);
                     return true;
-                case Keys.F1:
-                    buttonSettings_Click(null, null);
-                    return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
-        // Добавьте этот метод для загрузки книги по пути
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
         public void LoadBookFromPath(string filePath)
         {
-            LoadBook(filePath);
-        }
+            try
+            {
+                if(string.IsNullOrEmpty(filePath))
+                {
+                    MessageBox.Show("Путь к файлу не указан.", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
+                if(!File.Exists(filePath))
+                {
+                    MessageBox.Show($"Файл не найден:\n{filePath}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Используем основной метод загрузки
+                LoadBook(filePath);
+
+                // Обновляем заголовок формы
+                this.Text = $"Чтение: {Path.GetFileName(filePath)} - Книгоfeel";
+
+                // Показываем сообщение об успешной загрузке
+                statusLabel.Text = $"Загружено: {Path.GetFileName(filePath)}";
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки файла: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 
     public class BookInfo
