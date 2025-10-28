@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using CommandProject.Database;
 
 namespace CommandProject.Forms.BookCardControlls
 {
@@ -97,10 +99,14 @@ namespace CommandProject.Forms.BookCardControlls
             this.labelGenres.Text = string.IsNullOrWhiteSpace(genres) ? "Жанры: ---" : $"Жанры: {genres}";
             this.labelYear.Text = year.HasValue ? $"Год: {year.Value}" : "Год: ---";
 
-            if(coverImage != null)
+          
+
+            /*if(coverImage != null)
                 SetCoverImage(coverImage);
             else
-                SetCoverPlaceholder();
+                SetCoverPlaceholder();*/
+
+            LoadCoverFromDatabase();
         }
 
         // Alternative setter taking a cover image path (absolute or relative to app base)
@@ -109,8 +115,15 @@ namespace CommandProject.Forms.BookCardControlls
             // keep backward compatibility: call newer overload without genres and year
             SetData(bookId, title, authors, rating, shortDescription, null, null, null);
 
+
+            Console.WriteLine("------" + coverImagePath);
             if(!string.IsNullOrWhiteSpace(coverImagePath))
+            {
+                
+                Console.WriteLine("------Success--");
                 SetCoverImageFromPath(coverImagePath);
+
+            }
             else
                 SetCoverPlaceholder();
         }
@@ -139,21 +152,78 @@ namespace CommandProject.Forms.BookCardControlls
         {
             try
             {
-                string tryPath = path;
-                if(!Path.IsPathRooted(tryPath))
-                    tryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path);
-
-                if(!File.Exists(tryPath))
+                if (string.IsNullOrWhiteSpace(path))
                 {
                     SetCoverPlaceholder();
                     return;
                 }
 
-                using(var fs = new FileStream(tryPath, FileMode.Open, FileAccess.Read))
+                Console.WriteLine("LoadingStart-------");
+                string tryPath = path.Trim();
+
+                // Support |DataDirectory| token like other parts of the app
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string dataDir = (AppDomain.CurrentDomain.GetData("DataDirectory") as string) ?? baseDir;
+                if (tryPath.Contains("|DataDirectory|"))
+                    tryPath = tryPath.Replace("|DataDirectory|", dataDir);
+
+                // If relative, resolve against baseDir
+                if (!Path.IsPathRooted(tryPath))
+                    tryPath = Path.Combine(baseDir, tryPath);
+
+                // Build candidate paths: original, and if no extension try common image extensions
+                var candidates = new System.Collections.Generic.List<string>();
+                candidates.Add(tryPath);
+
+                string ext = Path.GetExtension(tryPath);
+                if (string.IsNullOrWhiteSpace(ext))
                 {
-                    var img = Image.FromStream(fs);
-                    SetCoverImage(img);
-                    img.Dispose();
+                    string[] exts = new[] { ".png", ".jpg", ".jpeg", ".bmp", ".gif" };
+                    foreach (var e in exts)
+                        candidates.Add(tryPath + e);
+                }
+                else
+                {
+                    // if file not found with given extension, also try few common ones
+                    string[] exts = new[] { ".png", ".jpg", ".jpeg", ".bmp", ".gif" };
+                    foreach (var e in exts)
+                    {
+                        var alt = Path.ChangeExtension(tryPath, e);
+                        if (!candidates.Contains(alt)) candidates.Add(alt);
+                    }
+                }
+
+                string found = null;
+                foreach (var c in candidates)
+                {
+                    try
+                    {
+                        if (File.Exists(c))
+                        {
+                            found = c;
+                            break;
+                        }
+                    }
+                    catch { }
+                }
+
+                if (string.IsNullOrEmpty(found))
+                {
+                    SetCoverPlaceholder();
+                    return;
+                }
+
+                Console.WriteLine("Loading-------");
+                using (var fs = new FileStream(found, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    Console.WriteLine("LoadingTest-------");
+                    using (var img = Image.FromStream(fs))
+                    {
+                        // Clone inside SetCoverImage will make a separate copy
+                        
+                        Console.WriteLine("SetImage-------");
+                        SetCoverImage(img);
+                    }
                 }
             }
             catch
@@ -179,6 +249,63 @@ namespace CommandProject.Forms.BookCardControlls
 
             // Raise event for external handlers if any
             DetailsClicked?.Invoke(this, this.BookId);
+        }
+
+        // Load cover image path from database for this BookId and set cover
+        public void LoadCoverFromDatabase()
+        {
+            try
+            {
+                if (this.BookId <= 0) return;
+
+                var db = new DatabaseHelper();
+                var dt = db.GetBookById(this.BookId);
+
+                Console.WriteLine("Loading cover image path from database for BookId: " + this.BookId);
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    var row = dt.Rows[0];
+                    // Support both possible column names used in different versions
+                    string path = null;
+                    if (row.Table.Columns.Contains("CoverImagePath") && row["CoverImagePath"] != DBNull.Value)
+                        path = row["CoverImagePath"].ToString();
+                    else if (row.Table.Columns.Contains("CoverPath") && row["CoverPath"] != DBNull.Value)
+                        path = row["CoverPath"].ToString();
+
+                    Console.WriteLine($"Loaded cover image path from database: {path}");
+                    if(!string.IsNullOrWhiteSpace(path))
+                    {
+                        Console.WriteLine($"IsNotNullPath");
+                        
+                        try
+                        {
+                            var rm = Properties.Resources.ResourceManager;
+
+                            var imgObj = rm.GetObject("app_logo");
+
+                            Console.WriteLine("IsNullObject - " + imgObj == null);
+
+                            if(imgObj is Image img)
+                            {
+                                
+                                Console.WriteLine("img - " + img.ToString());
+                                this.pictureBoxCover.Image = img;
+                            }
+                        }
+                        catch
+                        {
+                            // игнорируем ошибки при чтении .resx
+                        }
+                    }    
+                }
+
+                // fallback to placeholder
+                SetCoverPlaceholder();
+            }
+            catch
+            {
+                SetCoverPlaceholder();
+            }
         }
     }
 }

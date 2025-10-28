@@ -66,7 +66,7 @@ namespace CommandProject.Database
                 }
 
                 // Если строка подключения не найдена, используем значение по умолчанию
-                connectionString = @"Data Source=DESKTOP-JUDO2JQ\MSSQLSERVERDEZGA;AttachDbFilename=|DataDirectory|\OnlineLibraryDB.mdf;Integrated Security=True";
+                connectionString = @"Data Source=DESKTOP-JUDO2JQ\MSSQLSERVERDEZGA;AttachDbFilename=|DataDirectory|\back-bd.mdf;Integrated Security=True";
             }
         }
 
@@ -735,6 +735,7 @@ SELECT b.BookID AS ID,
        b.Title,
        b.Description,
        b.CoverImagePath AS CoverPath,
+       b.FilePath AS FilePath,
        STUFF((
            SELECT ', ' + a.FirstName + ' ' + a.LastName
            FROM BookAuthors ba

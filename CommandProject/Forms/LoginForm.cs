@@ -222,13 +222,6 @@ namespace CommandProject.Forms
                     // Успешная авторизация
                     SessionManager.Login(user);
 
-                    MessageBox.Show(
-                        $"Добро пожаловать, {user.FullName}!\nРоль: {user.RoleName}",
-                        "Успешный вход",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                    );
-
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }

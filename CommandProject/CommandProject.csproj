@@ -195,6 +195,17 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ReaderBook.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReaderBook.Designer.cs">
+      <DependentUpon>ReaderBook.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils\ValidationHelper.cs" />
     <EmbeddedResource Include="AddBookForms.resx">
       <DependentUpon>AddBookForms.cs</DependentUpon>
@@ -208,6 +219,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BookCardControl\BookCardControl.resx">
+      <DependentUpon>BookCardControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -219,14 +233,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -236,11 +246,74 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\Books\PDFs\1984_1948.pdf" />
+    <None Include="Resources\Books\PDFs\451_градус_по_Фаренгейту__ata.pdf" />
+    <None Include="Resources\Books\PDFs\Agata_Kristi_10_Negrityat.pdf" />
+    <None Include="Resources\Books\PDFs\Alexandr_Kuprin_Granatovy_braslet.pdf" />
+    <None Include="Resources\Books\PDFs\belaya-gvardia %28pdf%29.pdf" />
+    <None Include="Resources\Books\PDFs\Bulgakov_Sobache_serdce.pdf" />
+    <None Include="Resources\Books\PDFs\Chekhov_Vishnevyi_sad.pdf" />
+    <None Include="Resources\Books\PDFs\Dostoevskyi_Bratjya_Karamazovi.pdf" />
+    <None Include="Resources\Books\PDFs\Dostoevskyi_Idiot.pdf" />
+    <None Include="Resources\Books\PDFs\Dostoevskyi_Prestuplenie_i_nakazanie.pdf" />
+    <None Include="Resources\Books\PDFs\Esenin_Sobranie_stihotvorenii.pdf" />
+    <None Include="Resources\Books\PDFs\Gogol_Mertvye_dushy.pdf" />
+    <None Include="Resources\Books\PDFs\Gorkij_Na_dne.pdf" />
+    <None Include="Resources\Books\PDFs\ia_-_robot_-_aiziek_azimov.pdf" />
+    <None Include="Resources\Books\PDFs\Master-i-Margarita.pdf" />
+    <None Include="Resources\Books\PDFs\osnovanie-kompilyaciya-knigi-1-9.pdf" />
+    <None Include="Resources\Books\PDFs\Pasternak_Doktor_Zhivago.pdf" />
+    <None Include="Resources\Books\PDFs\Pushkin_Evgenyi_Onegin.pdf" />
+    <None Include="Resources\Books\PDFs\skotniy_dvor.pdf" />
+    <None Include="Resources\Books\PDFs\the_martian_chronicles_-_ray_bradbury.pdf" />
+    <None Include="Resources\Books\PDFs\Tolstoy_Anna_Karenina.pdf" />
+    <None Include="Resources\Books\PDFs\Tolstoy_Voina_i_mir.pdf" />
+    <None Include="Resources\Books\PDFs\tsvetaeva_izbrannoe_1961__ocr.pdf" />
+    <None Include="Resources\Books\PDFs\Turgenev_Otci_i_deti.pdf" />
+    <None Include="Resources\Books\PDFs\Ubiystvo_v_vostochnom_expresse.pdf" />
+    <None Include="Resources\Books\PDFs\А. Островский Бесприданница.pdf" />
+    <None Include="Resources\Books\PDFs\А. Пушкин Капитанская дочка.pdf" />
+    <None Include="Resources\Books\PDFs\А. Пушкин Повести Белкина.pdf" />
+    <None Include="Resources\Books\PDFs\А. Пушкин Руслан и Людмила.pdf" />
+    <None Include="Resources\Books\PDFs\А.Пушкин Дубровский.pdf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Books\Covers\fourthimage.png" />
+    <Content Include="Resources\Books\Covers\onethousand.png" />
+    <Content Include="Resources\Books\Covers\1984.png" />
+    <Content Include="Resources\Books\Covers\451.png" />
+    <Content Include="Resources\Books\Covers\bespridanica.png" />
+    <Content Include="Resources\Books\Covers\braslet.png" />
+    <Content Include="Resources\Books\Covers\cvetaeva.png" />
+    <Content Include="Resources\Books\Covers\dubrovskiy.png" />
+    <Content Include="Resources\Books\Covers\dzivago.png" />
+    <Content Include="Resources\Books\Covers\esenin-stihi.png" />
+    <Content Include="Resources\Books\Covers\hroniki.png" />
+    <Content Include="Resources\Books\Covers\idiot.png" />
+    <Content Include="Resources\Books\Covers\kapitanskya-dochka.png" />
+    <Content Include="Resources\Books\Covers\karamozovi.png" />
+    <Content Include="Resources\Books\Covers\karenina.png" />
+    <Content Include="Resources\Books\Covers\master-margarita.png" />
+    <Content Include="Resources\Books\Covers\metrvie-dushi.png" />
+    <Content Include="Resources\Books\Covers\na-dne.png" />
+    <Content Include="Resources\Books\Covers\negrityat.png" />
+    <Content Include="Resources\Books\Covers\onegin.png" />
+    <Content Include="Resources\Books\Covers\osnovanie.png" />
+    <Content Include="Resources\Books\Covers\otci-deti.png" />
+    <Content Include="Resources\Books\Covers\pasternak.png" />
+    <Content Include="Resources\Books\Covers\povesti-belkina.png" />
+    <Content Include="Resources\Books\Covers\prestyplenie.png" />
+    <Content Include="Resources\Books\Covers\robot.png" />
+    <Content Include="Resources\Books\Covers\ruslan and ludmila.png" />
+    <Content Include="Resources\Books\Covers\sad.png" />
+    <Content Include="Resources\Books\Covers\skotnii dvor.png" />
+    <Content Include="Resources\Books\Covers\sobachee-serdce.png" />
+    <Content Include="Resources\Books\Covers\voina-mir.png" />
+    <Content Include="Resources\Books\Covers\white guard.png" />
+    <Content Include="Resources\Books\Covers\ybistvo.png" />
     <Content Include="Resources\Icons\app_logo.png" />
     <Content Include="Resources\Icons\icon_settins.png" />
   </ItemGroup>

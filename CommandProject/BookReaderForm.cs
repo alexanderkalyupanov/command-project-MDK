@@ -213,6 +213,17 @@ namespace CommandProject
                         this.Text = $"Чтение: {TBTitle.Text} - Книгоfeel";
                     }
                 }
+
+                // Дополнительная диагностика для пути к файлу
+                string raw = (row["FilePath"] as string ?? "").Trim();
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                if (raw.Contains("|DataDirectory|"))
+                    raw = raw.Replace("|DataDirectory|", (AppDomain.CurrentDomain.GetData("DataDirectory") ?? baseDir).ToString());
+                string candidate = Path.IsPathRooted(raw) ? raw : Path.Combine(baseDir, raw);
+                if (!Path.HasExtension(candidate) && row.Table.Columns.Contains("FileFormat") && row["FileFormat"] != DBNull.Value)
+                    candidate = candidate + "." + row["FileFormat"].ToString().Trim().TrimStart('.');
+                candidate = Path.GetFullPath(candidate);
+                MessageBox.Show(candidate + "\nExists=" + File.Exists(candidate));
             }
             catch (Exception ex)
             {
@@ -374,7 +385,12 @@ namespace CommandProject
             // Запуск чтения книги для пользователя
             try
             {
-                if (string.IsNullOrEmpty(bookFilePath) || !File.Exists(bookFilePath))
+                Console.WriteLine("BookFilePath: " + bookFilePath);
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                var bookPath = /*Path.Combine(baseDir, */bookFilePath/*)*/;
+                Console.WriteLine("BookFileFullPath: " + bookPath);
+                Console.WriteLine("FileExist: " + File.Exists(bookPath));
+                if (string.IsNullOrEmpty(bookFilePath) || !File.Exists(bookPath))
                 {
                     MessageBox.Show("Файл книги не найден. Пожалуйста, обратитесь к администратору.",
                         "Файл не найден", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -382,10 +398,10 @@ namespace CommandProject
                 }
 
                 // Открываем существующую форму для чтения книг
-                using (var readingForm = new BookReader.BookReader())
+                using (var readingForm = new ReaderBook())
                 {
                     // Загружаем книгу в читалку
-                    readingForm.LoadBookFromPath(bookFilePath);
+                    readingForm.LoadBookFromPath(bookPath);
                     readingForm.ShowDialog(this);
                 }
             }
