@@ -1,0 +1,604 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using CommandProject.Database;
+
+namespace CommandProject
+{
+    public partial class BookReaderForm : Form
+    {
+        private int? loadedBookId;
+        private bool isAdminMode;
+        private string currentUserRole;
+        private string bookFilePath;
+
+        // Конструктор для администратора (редактирование)
+        public BookReaderForm(int bookId, bool isAdmin = false, string userRole = "Admin")
+        {
+            InitializeComponent();
+            loadedBookId = bookId;
+            isAdminMode = isAdmin;
+            currentUserRole = userRole;
+
+            ConfigureFormForUserRole();
+            try
+            {
+                LoadBook(bookId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке книги: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Конструктор для пользователя (только чтение)
+        public BookReaderForm(int bookId, string userRole = "User")
+        {
+            InitializeComponent();
+            loadedBookId = bookId;
+            isAdminMode = false;
+            currentUserRole = userRole;
+
+            ConfigureFormForUserRole();
+            try
+            {
+                LoadBook(bookId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке книги: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ConfigureFormForUserRole()
+        {
+            if (isAdminMode || currentUserRole == "Admin")
+            {
+                // Режим администратора - все элементы доступны
+                SetAdminMode();
+                this.Text = "Редактирование книги - Книгоfeel (Администратор)";
+            }
+            else
+            {
+                // Режим пользователя - только описание и кнопка чтения
+                SetUserMode();
+                this.Text = "Чтение книги - Книгоfeel";
+            }
+        }
+
+        private void SetAdminMode()
+        {
+            // Показываем все элементы для админа
+            label1.Visible = true;
+            TBTitle.Visible = true;
+            label6.Visible = true;
+            CBLanguages.Visible = true;
+            label7.Visible = true;
+            CBGenres.Visible = true;
+            label2.Visible = true;
+            RTBDescription.Visible = true;
+
+            // Кнопки админа
+            buttonFilters.Visible = true;
+            buttonFilters.Text = "Сохранить изменения";
+            button1.Visible = true;
+            button1.Text = "Отменить";
+
+            // Скрываем кнопку чтения
+            buttonRead.Visible = false;
+
+            // Делаем элементы доступными для редактирования
+            SetControlsEnabled(true);
+        }
+
+        private void SetUserMode()
+        {
+            // Скрываем ненужные элементы для пользователя
+            label1.Visible = false;
+            TBTitle.Visible = false;
+            label6.Visible = false;
+            CBLanguages.Visible = false;
+            label7.Visible = false;
+            CBGenres.Visible = false;
+
+            // Оставляем только описание
+            label2.Visible = true;
+            label2.Text = "Описание книги";
+            label2.Location = new Point(12, 20);
+
+            RTBDescription.Visible = true;
+            RTBDescription.Location = new Point(12, 40);
+            RTBDescription.Height = 250;
+            RTBDescription.ReadOnly = true;
+            RTBDescription.BackColor = SystemColors.Control;
+
+            // Скрываем кнопки админа
+            buttonFilters.Visible = false;
+            button1.Visible = false;
+
+            // Показываем кнопку чтения
+            buttonRead.Visible = true;
+
+            // Настраиваем панель для пользовательского режима
+            panel2.Height = 350;
+        }
+
+        private void SetControlsEnabled(bool enabled)
+        {
+            TBTitle.ReadOnly = !enabled;
+            RTBDescription.ReadOnly = !enabled;
+            CBLanguages.Enabled = enabled;
+            CBGenres.Enabled = enabled;
+
+            if (!enabled)
+            {
+                TBTitle.BackColor = SystemColors.Control;
+                RTBDescription.BackColor = SystemColors.Control;
+                CBLanguages.BackColor = SystemColors.Control;
+                CBGenres.BackColor = SystemColors.Control;
+            }
+            else
+            {
+                TBTitle.BackColor = SystemColors.Window;
+                RTBDescription.BackColor = SystemColors.Window;
+                CBLanguages.BackColor = SystemColors.Window;
+                CBGenres.BackColor = SystemColors.Window;
+            }
+        }
+
+        private void LoadBook(int bookId)
+        {
+            var db = new DatabaseHelper();
+            DataTable dt = db.GetBookById(bookId);
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                MessageBox.Show("Книга не найдена.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var row = dt.Rows[0];
+            try
+            {
+                TBTitle.Text = row.Table.Columns.Contains("Title") && row["Title"] != DBNull.Value ? row["Title"].ToString() : string.Empty;
+                RTBDescription.Text = row.Table.Columns.Contains("Description") && row["Description"] != DBNull.Value ? row["Description"].ToString() : string.Empty;
+
+                // Получаем путь к файлу книги из базы данных или ищем его автоматически
+                if (row.Table.Columns.Contains("FilePath") && row["FilePath"] != DBNull.Value && !string.IsNullOrWhiteSpace(row["FilePath"].ToString()))
+                {
+                    // Если путь уже указан в БД — попробуем разрешить его относительно baseDir и с учётом формата
+                    string dbPath = row["FilePath"].ToString();
+                    string dbFormat = row.Table.Columns.Contains("FileFormat") && row["FileFormat"] != DBNull.Value ? row["FileFormat"].ToString() : null;
+                    bookFilePath = ResolveBookFilePath(bookId, dbPath, dbFormat);
+                }
+                else
+                {
+                    // Если путь не указан в БД, ищем файл по данным книги
+                    bookFilePath = FindBookFile(bookId);
+                }
+
+                // Загрузка жанров
+                if (row.Table.Columns.Contains("Genres") && row["Genres"] != DBNull.Value)
+                {
+                    string genres = row["Genres"].ToString();
+                    if (!string.IsNullOrEmpty(genres))
+                    {
+                        CBGenres.Text = genres;
+                    }
+                }
+
+                // Загрузка языков
+                if (row.Table.Columns.Contains("Language") && row["Language"] != DBNull.Value)
+                {
+                    string language = row["Language"].ToString();
+                    if (!string.IsNullOrEmpty(language))
+                    {
+                        CBLanguages.Text = language;
+                    }
+                }
+
+                // Обновляем заголовок формы
+                if (!string.IsNullOrEmpty(TBTitle.Text))
+                {
+                    if (isAdminMode || currentUserRole == "Admin")
+                    {
+                        this.Text = $"Редактирование: {TBTitle.Text} - Книгоfeel";
+                    }
+                    else
+                    {
+                        this.Text = $"Чтение: {TBTitle.Text} - Книгоfeel";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке данных книги: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Resolve a stored file path and format for a book into an absolute file path.
+        /// If dbPath is relative it will be combined with AppDomain.CurrentDomain.BaseDirectory.
+        /// If dbFormat is provided and dbPath does not contain an extension, the format will be appended.
+        /// </summary>
+        private string ResolveBookFilePath(int bookId, string dbPath, string dbFormat)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(dbPath)) return null;
+
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string candidate = dbPath;
+
+                // If path is not rooted, combine with baseDir
+                if (!Path.IsPathRooted(candidate))
+                {
+                    candidate = Path.Combine(baseDir, candidate);
+                }
+
+                // If path has no extension but dbFormat is provided, append extension
+                string ext = Path.GetExtension(candidate);
+                if (string.IsNullOrWhiteSpace(ext) && !string.IsNullOrWhiteSpace(dbFormat))
+                {
+                    string f = dbFormat.Trim();
+                    if (!f.StartsWith(".")) f = "." + f;
+                    candidate = candidate + f;
+                }
+
+                if (File.Exists(candidate))
+                    return candidate;
+
+                // try with lowercase/uppercase format variants
+                if (!string.IsNullOrWhiteSpace(dbFormat))
+                {
+                    string f = dbFormat.Trim();
+                    if (!f.StartsWith(".")) f = "." + f;
+                    var alt = candidate + f; // only meaningful if original had no ext
+                    if (File.Exists(alt)) return alt;
+                }
+
+                // fallback: search in Resources/Books folder by book id or title
+                return FindBookFile(bookId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Поиск файла книги в папке Resources/Books с учетом названия или ID книги.
+        /// Метод принимает ID книги.
+        /// </summary>
+        private string FindBookFile(int bookId)
+        {
+            try
+            {
+                var db = new DatabaseHelper();
+                DataTable dt = db.GetBookById(bookId);
+                string title = null;
+                string dbPath = null;
+                string dbFormat = null;
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    var r = dt.Rows[0];
+                    title = r.Table.Columns.Contains("Title") && r["Title"] != DBNull.Value ? r["Title"].ToString() : null;
+                    dbPath = r.Table.Columns.Contains("FilePath") && r["FilePath"] != DBNull.Value ? r["FilePath"].ToString() : null;
+                    dbFormat = r.Table.Columns.Contains("FileFormat") && r["FileFormat"] != DBNull.Value ? r["FileFormat"].ToString() : null;
+                }
+
+                // If DB specified a path, try to resolve it first
+                if (!string.IsNullOrWhiteSpace(dbPath))
+                {
+                    var resolved = ResolveBookFilePath(bookId, dbPath, dbFormat);
+                    if (!string.IsNullOrWhiteSpace(resolved) && File.Exists(resolved))
+                        return resolved;
+                }
+
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string booksFolder = Path.Combine(baseDir, "Resources", "Books");
+
+                if (!Directory.Exists(booksFolder))
+                {
+                    Directory.CreateDirectory(booksFolder);
+                    return null;
+                }
+
+                // If format specified in DB, prioritize it
+                List<string> formatsToTry = new List<string>();
+                if (!string.IsNullOrWhiteSpace(dbFormat))
+                {
+                    string f = dbFormat.Trim().ToLower().TrimStart('.');
+                    formatsToTry.Add($"*.{f}");
+                }
+
+                // then common formats
+                formatsToTry.AddRange(new[] { "*.pdf", "*.fb2", "*.txt" });
+
+                // If we have a title, use it to search
+                string searchPattern = (title ?? string.Empty).Replace(" ", "_").Replace(":", "").Replace("?", "").ToLower();
+
+                foreach (string format in formatsToTry.Distinct())
+                {
+                    var files = Directory.GetFiles(booksFolder, format, SearchOption.AllDirectories)
+                        .Where(f => string.IsNullOrWhiteSpace(searchPattern) || Path.GetFileNameWithoutExtension(f).ToLower().Contains(searchPattern))
+                        .ToArray();
+
+                    if (files.Length > 0)
+                        return files[0];
+                }
+
+                // last resort: try to find by id in filename
+                string idPattern = $"*{bookId}*";
+                foreach (string format in formatsToTry.Distinct())
+                {
+                    var files = Directory.GetFiles(booksFolder, idPattern + Path.GetExtension(format).Replace("*", ""), SearchOption.AllDirectories);
+                    if (files.Length > 0)
+                        return files[0];
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при поиске файла книги: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+        }
+
+        private void buttonFilters_Click(object sender, EventArgs e)
+        {
+            if (!isAdminMode && currentUserRole != "Admin")
+            {
+                MessageBox.Show("У вас нет прав для редактирования книг.", "Доступ запрещен",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(TBTitle.Text))
+            {
+                MessageBox.Show("Название книги не может быть пустым!", "Ошибка ввода",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                TBTitle.Focus();
+                return;
+            }
+
+            if (CBLanguages.SelectedItem == null && string.IsNullOrWhiteSpace(CBLanguages.Text))
+            {
+                MessageBox.Show("Выберите язык книги!", "Ошибка ввода",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                CBLanguages.Focus();
+                return;
+            }
+
+            if (CBGenres.SelectedItem == null && string.IsNullOrWhiteSpace(CBGenres.Text))
+            {
+                MessageBox.Show("Выберите жанр книги!", "Ошибка ввода",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                CBGenres.Focus();
+                return;
+            }
+
+            try
+            {
+                using (SqlConnection conn = ClassConnectDB.GetOpenConnection())
+                {
+                    string query = @"UPDATE Book SET 
+                                   Title = @Title,
+                                   Language = @Language,
+                                   Genres = @Genres,
+                                   Description = @Description
+                                   WHERE ID = @ID_Book";
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@Title", TBTitle.Text.Trim());
+                    cmd.Parameters.AddWithValue("@Language", CBLanguages.Text.Trim());
+                    cmd.Parameters.AddWithValue("@Genres", CBGenres.Text.Trim());
+                    cmd.Parameters.AddWithValue("@Description", RTBDescription.Text.Trim());
+                    cmd.Parameters.AddWithValue("@ID_Book", loadedBookId);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Изменения сохранены успешно!",
+                                      "Успешно",
+                                      MessageBoxButtons.OK,
+                                      MessageBoxIcon.Information);
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Не удалось сохранить изменения. Книга не найдена.",
+                                      "Ошибка",
+                                      MessageBoxButtons.OK,
+                                      MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при сохранении изменений: {ex.Message}",
+                               "Ошибка",
+                               MessageBoxButtons.OK,
+                               MessageBoxIcon.Error);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (!isAdminMode && currentUserRole != "Admin")
+            {
+                this.Close();
+                return;
+            }
+
+            var result = MessageBox.Show("Отменить все изменения и закрыть форму?",
+                                       "Подтверждение",
+                                       MessageBoxButtons.YesNo,
+                                       MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                this.DialogResult = DialogResult.Cancel;
+                this.Close();
+            }
+        }
+
+        private void buttonRead_Click(object sender, EventArgs e)
+        {
+            // Запуск чтения книги для пользователя
+            try
+            {
+                if (string.IsNullOrEmpty(bookFilePath) || !File.Exists(bookFilePath))
+                {
+                    MessageBox.Show("Файл книги не найден. Пожалуйста, обратитесь к администратору.",
+                        "Файл не найден", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Открываем существующую форму для чтения книг
+                using (var readingForm = new ReaderBook())
+                {
+                    // Загружаем книгу в читалку
+                    readingForm.LoadBookFromPath(bookFilePath);
+                    readingForm.ShowDialog(this);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при запуске чтения: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BookReaderForm_Load(object sender, EventArgs e)
+        {
+            // Загрузка списков для комбобоксов (только для админа)
+            if (isAdminMode || currentUserRole == "Admin")
+            {
+                LoadComboBoxData();
+            }
+        }
+
+        private void LoadComboBoxData()
+        {
+            try
+            {
+                using (SqlConnection conn = ClassConnectDB.GetOpenConnection())
+                {
+                    string languageQuery = "SELECT DISTINCT Language FROM Books WHERE Language IS NOT NULL AND Language != ''";
+                    using (SqlCommand languageCmd = new SqlCommand(languageQuery, conn))
+                    using (SqlDataReader languageReader = languageCmd.ExecuteReader())
+                    {
+                        CBLanguages.Items.Clear();
+                        while (languageReader.Read())
+                        {
+                            CBLanguages.Items.Add(languageReader[0]?.ToString());
+                        }
+                    }
+
+                    string genreQuery = "SELECT DISTINCT Genres FROM Books WHERE Genres IS NOT NULL AND Genres != ''";
+                    using (SqlCommand genreCmd = new SqlCommand(genreQuery, conn))
+                    using (SqlDataReader genreReader = genreCmd.ExecuteReader())
+                    {
+                        CBGenres.Items.Clear();
+                        while (genreReader.Read())
+                        {
+                            CBGenres.Items.Add(genreReader[0]?.ToString());
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке справочников: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void buttonSettings_Click(object sender, EventArgs e)
+        {
+            var contextMenu = new ContextMenuStrip();
+
+            if (isAdminMode || currentUserRole == "Admin")
+            {
+                contextMenu.Items.Add("Режим администратора", null, (s, args) =>
+                {
+                    MessageBox.Show("Вы работаете в режиме администратора", "Информация",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                });
+                contextMenu.Items.Add("-");
+            }
+
+            contextMenu.Items.Add("О программе", null, (s, args) =>
+            {
+                MessageBox.Show("Книгоfeel - Система чтения книг\nВерсия 2.0\n\nРежим: " +
+                    (isAdminMode || currentUserRole == "Admin" ? "Администратор" : "Пользователь"),
+                    "О программе", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            });
+
+            contextMenu.Items.Add("Информация о книге", null, (s, args) =>
+            {
+                ShowBookInfo();
+            });
+
+            contextMenu.Show(buttonSettings, new Point(0, buttonSettings.Height));
+        }
+
+        private void ShowBookInfo()
+        {
+            string fileInfo = string.IsNullOrEmpty(bookFilePath) ? "Файл не найден" : Path.GetFileName(bookFilePath);
+
+            string info = $"Название: {TBTitle.Text}\n" +
+                         $"Язык: {CBLanguages.Text}\n" +
+                         $"Жанр: {CBGenres.Text}\n" +
+                         $"Файл: {fileInfo}\n" +
+                         $"Описание: {RTBDescription.Text}\n\n" +
+                         $"Режим: {(isAdminMode || currentUserRole == "Admin" ? "Администратор" : "Чтение")}";
+
+            MessageBox.Show(info, "Информация о книге",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        // Метод для проверки прав доступа
+        public static bool CanUserEditBooks(string userRole)
+        {
+            return userRole == "Admin";
+        }
+
+        // Метод для создания формы в зависимости от роли пользователя
+        public static void ShowBookForm(int bookId, string userRole, Form parentForm = null)
+        {
+            bool isAdmin = CanUserEditBooks(userRole);
+            BookReaderForm form;
+
+            if (isAdmin)
+            {
+                form = new BookReaderForm(bookId, true, userRole);
+            }
+            else
+            {
+                form = new BookReaderForm(bookId, userRole);
+            }
+
+            if (parentForm != null)
+            {
+                form.ShowDialog(parentForm);
+            }
+            else
+            {
+                form.ShowDialog();
+            }
+        }
+    }
+}

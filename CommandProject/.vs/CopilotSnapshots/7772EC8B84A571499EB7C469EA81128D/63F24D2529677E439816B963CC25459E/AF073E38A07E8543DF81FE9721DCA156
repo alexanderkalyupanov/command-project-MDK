@@ -1,0 +1,338 @@
+﻿using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
+using CommandProject.Database;
+
+namespace CommandProject.Forms.BookCardControlls
+{
+    public partial class BookCardControl : UserControl
+    {
+        public int BookId { get; private set; }
+
+        // Raised when Details button is clicked. Argument = BookId (or 0 if not set).
+        public event EventHandler<int> DetailsClicked;
+        // Raised when delete is requested from this card
+        public event EventHandler<int> DeleteRequested;
+
+        private ContextMenuStrip cardContextMenu;
+
+        public BookCardControl()
+        {
+            InitializeComponent();
+            ResetToDefaults();
+            InitializeContextMenu();
+            // enable key preview via parent form; we will not set KeyPreview here
+        }
+
+        private void InitializeContextMenu()
+        {
+            cardContextMenu = new ContextMenuStrip();
+            var miDetails = new ToolStripMenuItem("Подробнее");
+            miDetails.Click += (s, e) => {
+                ButtonDetails_Click(this, EventArgs.Empty);
+            };
+            var miDelete = new ToolStripMenuItem("Удалить");
+            miDelete.Name = "miDelete";
+            miDelete.Click += (s, e) => {
+                DeleteRequested?.Invoke(this, this.BookId);
+            };
+            cardContextMenu.Items.Add(miDetails);
+            cardContextMenu.Items.Add(miDelete);
+
+            // Show context menu on right click
+            this.MouseUp += (s, e) => {
+                if (e.Button == MouseButtons.Right)
+                {
+                    // enable/disable delete item based on session (main menu will set visibility too)
+                    var deleteItem = cardContextMenu.Items[1] as ToolStripMenuItem;
+                    try
+                    {
+                        deleteItem.Enabled = CommandProject.Managers.SessionManager.IsAdmin;
+                    }
+                    catch { deleteItem.Enabled = false; }
+
+                    cardContextMenu.Show(this, e.Location);
+                }
+            };
+
+            // also show when right-click on inner controls
+            foreach (Control c in this.Controls)
+            {
+                c.MouseUp += (s, e) => {
+                    if (e.Button == MouseButtons.Right)
+                    {
+                        var deleteItem = cardContextMenu.Items[1] as ToolStripMenuItem;
+                        try
+                        {
+                            deleteItem.Enabled = CommandProject.Managers.SessionManager.IsAdmin;
+                        }
+                        catch { deleteItem.Enabled = false; }
+
+                        cardContextMenu.Show((Control)s, e.Location);
+                    }
+                };
+            }
+        }
+
+        private void ResetToDefaults()
+        {
+            BookId = 0;
+            labelTitle.Text = string.Empty;
+            linkLabelAuthor.Text = string.Empty;
+            labelRating.Text = "0.0/5.0";
+            labelDescription.Text = string.Empty;
+            labelGenres.Text = "Жанры: ---";
+            labelYear.Text = "Год: ---";
+            SetCoverPlaceholder();
+        }
+
+        // Simple model-less setter: pass values directly (new overload with genres and year)
+        public void SetData(int bookId, string title, string authors, decimal? rating, string shortDescription, string genres, int? year, Image coverImage = null)
+        {
+            this.BookId = bookId;
+            this.labelTitle.Text = title ?? string.Empty;
+            this.linkLabelAuthor.Text = authors ?? string.Empty;
+            this.labelDescription.Text = shortDescription ?? string.Empty;
+            this.labelRating.Text = rating.HasValue ? $"{rating.Value:0.0}/5.0" : "0.0/5.0";
+            this.labelGenres.Text = string.IsNullOrWhiteSpace(genres) ? "Жанры: ---" : $"Жанры: {genres}";
+            this.labelYear.Text = year.HasValue ? $"Год: {year.Value}" : "Год: ---";
+
+            if(coverImage != null)
+                SetCoverImage(coverImage);
+            else
+                SetCoverPlaceholder();
+
+            LoadCoverFromDatabase();
+        }
+
+        // Alternative setter taking a cover image path (absolute or relative to app base)
+        public void SetData(int bookId, string title, string authors, decimal? rating, string shortDescription, string coverImagePath)
+        {
+            // keep backward compatibility: call newer overload without genres and year
+            SetData(bookId, title, authors, rating, shortDescription, null, null, null);
+
+            if(!string.IsNullOrWhiteSpace(coverImagePath))
+                SetCoverImageFromPath(coverImagePath);
+            else
+                SetCoverPlaceholder();
+        }
+
+        // Existing old overload without cover path - update to call new overload
+        public void SetData(int bookId, string title, string authors, decimal? rating, string shortDescription, Image coverImage = null)
+        {
+            SetData(bookId, title, authors, rating, shortDescription, null, null, coverImage);
+        }
+
+        public void SetCoverImage(Image image)
+        {
+            try
+            {
+                var old = pictureBoxCover.Image;
+                pictureBoxCover.Image = (Image)image.Clone();
+                // Ensure image is visible
+                try { pictureBoxCover.SizeMode = PictureBoxSizeMode.Zoom; } catch { }
+                old?.Dispose();
+                Debug.WriteLine($"[BookCard] SetCoverImage successful for BookId={this.BookId}");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[BookCard] SetCoverImage failed for BookId={this.BookId}: {ex}");
+                SetCoverPlaceholder();
+            }
+        }
+
+        public void SetCoverImageFromPath(string path)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(path))
+                {
+                    Debug.WriteLine($"[BookCard] Empty cover path for BookId={this.BookId}");
+                    SetCoverPlaceholder();
+                    return;
+                }
+
+                Debug.WriteLine($"[BookCard] SetCoverImageFromPath called with '{path}' for BookId={this.BookId}");
+                string tryPath = path.Trim();
+
+                // Support |DataDirectory| token like other parts of the app
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string dataDir = (AppDomain.CurrentDomain.GetData("DataDirectory") as string) ?? baseDir;
+                if (tryPath.Contains("|DataDirectory|"))
+                    tryPath = tryPath.Replace("|DataDirectory|", dataDir);
+
+                // If relative, resolve against baseDir
+                if (!Path.IsPathRooted(tryPath))
+                    tryPath = Path.Combine(baseDir, tryPath);
+
+                Debug.WriteLine($"[BookCard] Resolved tryPath='{tryPath}'");
+
+                // Build candidate paths: original, and if no extension try common image extensions
+                var candidates = new System.Collections.Generic.List<string>();
+                candidates.Add(tryPath);
+
+                string ext = Path.GetExtension(tryPath);
+                if (string.IsNullOrWhiteSpace(ext))
+                {
+                    string[] exts = new[] { ".png", ".jpg", ".jpeg", ".bmp", ".gif" };
+                    foreach (var e in exts)
+                        candidates.Add(tryPath + e);
+                }
+                else
+                {
+                    // if file not found with given extension, also try few common ones
+                    string[] exts = new[] { ".png", ".jpg", ".jpeg", ".bmp", ".gif" };
+                    foreach (var e in exts)
+                    {
+                        var alt = Path.ChangeExtension(tryPath, e);
+                        if (!candidates.Contains(alt)) candidates.Add(alt);
+                    }
+                }
+
+                Debug.WriteLine($"[BookCard] Candidate files ({candidates.Count}):");
+                foreach (var c in candidates)
+                {
+                    Debug.WriteLine(" - " + c);
+                }
+
+                string found = null;
+                foreach (var c in candidates)
+                {
+                    try
+                    {
+                        bool exists = File.Exists(c);
+                        Debug.WriteLine($"[BookCard] File.Exists('{c}') = {exists}");
+                        if (exists)
+                        {
+                            found = c;
+                            break;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"[BookCard] Exception checking File.Exists('{c}') = {ex}");
+                    }
+                }
+
+                if (string.IsNullOrEmpty(found))
+                {
+                    Debug.WriteLine($"[BookCard] No cover file found for BookId={this.BookId}");
+                    SetCoverPlaceholder();
+                    return;
+                }
+
+                Debug.WriteLine($"[BookCard] Found cover file: {found}");
+
+                try
+                {
+                    // Try Image.FromFile as alternative (locks file until disposed) but we'll dispose immediately
+                    Debug.WriteLine($"[BookCard] Attempting Image.FromFile for '{found}'");
+                    using (var imgFromFile = Image.FromFile(found))
+                    {
+                        SetCoverImage(imgFromFile);
+                    }
+                }
+                catch (Exception exFile)
+                {
+                    Debug.WriteLine($"[BookCard] Image.FromFile failed: {exFile}");
+
+                    // fallback to stream-based loading which is usually better for file locking
+                    try
+                    {
+                        Debug.WriteLine($"[BookCard] Attempting Image.FromStream for '{found}'");
+                        using (var fs = new FileStream(found, FileMode.Open, FileAccess.Read, FileShare.Read))
+                        {
+                            using (var img = Image.FromStream(fs))
+                            {
+                                SetCoverImage(img);
+                            }
+                        }
+                    }
+                    catch (Exception exStream)
+                    {
+                        Debug.WriteLine($"[BookCard] Image.FromStream failed: {exStream}");
+                        SetCoverPlaceholder();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[BookCard] SetCoverImageFromPath overall failure for BookId={this.BookId}: {ex}");
+                SetCoverPlaceholder();
+            }
+        }
+
+        private void SetCoverPlaceholder()
+        {
+            try
+            {
+                var old = pictureBoxCover.Image;
+                var bmp = new Bitmap(Math.Max(1, pictureBoxCover.Width), Math.Max(1, pictureBoxCover.Height));
+                using(var g = Graphics.FromImage(bmp))
+                {
+                    g.Clear(Color.LightGray);
+                }
+                pictureBoxCover.Image = bmp;
+                try { pictureBoxCover.SizeMode = PictureBoxSizeMode.CenterImage; } catch { }
+                old?.Dispose();
+                Debug.WriteLine($"[BookCard] Placeholder set for BookId={this.BookId}");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[BookCard] SetCoverPlaceholder failed: {ex}");
+            }
+        }
+
+        private void ButtonDetails_Click(object sender, EventArgs e)
+        {
+
+            // Raise event for external handlers if any
+            DetailsClicked?.Invoke(this, this.BookId);
+        }
+
+        // Load cover image path from database for this BookId and set cover
+        public void LoadCoverFromDatabase()
+        {
+            try
+            {
+                if (this.BookId <= 0)
+                {
+                    Debug.WriteLine($"[BookCard] LoadCoverFromDatabase skipped because BookId={this.BookId}");
+                    return;
+                }
+
+                var db = new DatabaseHelper();
+                var dt = db.GetBookById(this.BookId);
+
+                Debug.WriteLine("[BookCard] Loading cover image path from database for BookId: " + this.BookId);
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    var row = dt.Rows[0];
+                    // Support both possible column names used in different versions
+                    string path = null;
+                    if (row.Table.Columns.Contains("CoverImagePath") && row["CoverImagePath"] != DBNull.Value)
+                        path = row["CoverImagePath"].ToString();
+                    else if (row.Table.Columns.Contains("CoverPath") && row["CoverPath"] != DBNull.Value)
+                        path = row["CoverPath"].ToString();
+
+                    Debug.WriteLine($"[BookCard] Loaded cover image path from database: '{path}'");
+                    if (!string.IsNullOrWhiteSpace(path))
+                    {
+                        SetCoverImageFromPath(path);
+                        return;
+                    }
+                }
+
+                // fallback to placeholder
+                SetCoverPlaceholder();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[BookCard] LoadCoverFromDatabase failed: {ex}");
+                SetCoverPlaceholder();
+            }
+        }
+    }
+}

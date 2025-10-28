@@ -136,6 +136,7 @@ namespace CommandProject.Forms.BookCardControlls
 
         public void SetCoverImage(Image image)
         {
+            return;
             try
             {
                 var old = pictureBoxCover.Image;
@@ -234,6 +235,7 @@ namespace CommandProject.Forms.BookCardControlls
 
         private void SetCoverPlaceholder()
         {
+            return;
             var old = pictureBoxCover.Image;
             var bmp = new Bitmap(Math.Max(1, pictureBoxCover.Width), Math.Max(1, pictureBoxCover.Height));
             using(var g = Graphics.FromImage(bmp))
@@ -281,7 +283,7 @@ namespace CommandProject.Forms.BookCardControlls
                         {
                             var rm = Properties.Resources.ResourceManager;
 
-                            var imgObj = rm.GetObject("app_logo");
+                            var imgObj = rm.GetObject(path);
 
                             Console.WriteLine("IsNullObject - " + imgObj == null);
 

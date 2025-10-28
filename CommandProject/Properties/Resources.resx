@@ -121,7 +121,100 @@
   <data name="app_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\app_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="bespridanica" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\bespridanica.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="braslet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\braslet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cvetaeva" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\cvetaeva.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dubrovskiy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\dubrovskiy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dzivago" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\dzivago.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="esenin-stihi" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\esenin-stihi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fourthimage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\fourthimage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hroniki" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\hroniki.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="icon_settins" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_settins.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="idiot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\idiot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="kapitanskya-dochka" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\kapitanskya-dochka.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="karamozovi" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\karamozovi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="karenina" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\karenina.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="master-margarita" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\master-margarita.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="metrvie-dushi" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\metrvie-dushi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="na-dne" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\na-dne.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="negrityat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\negrityat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="onegin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\onegin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="onethousand" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\onethousand.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="osnovanie" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\osnovanie.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="otci-deti" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\otci-deti.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pasternak" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\pasternak.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="povesti-belkina" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\povesti-belkina.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="prestyplenie" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\prestyplenie.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="robot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\robot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ruslan and ludmila" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\ruslan and ludmila.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sad" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\sad.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="skotnii dvor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\skotnii dvor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sobachee-serdce" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\sobachee-serdce.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="voina-mir" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\voina-mir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="white guard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\white guard.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ybistvo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Books\Covers\ybistvo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
